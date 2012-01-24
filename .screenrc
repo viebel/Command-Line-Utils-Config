@@ -1,0 +1,22 @@
+#windowlist -b Present a list of all windows for selection.
+#focus       Switch the input focus to the next region
+
+# Bind F11 and F12 (NOT F1 and F2) to previous and next screen window
+bindkey -k F1 prev
+bindkey -k F2 next
+
+startup_message off
+defscrollback   900000
+
+# Window list at the bottom.
+hardstatus alwayslastline
+# hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
+# hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+# execute date every 5 secs and output to %1`
+# backtick 1 5 5 date +"%b %d  %H:%M"
+# hardstatus alwayslastline "%1`"
+#hardstatus string "%1`       %-w%{= BW}%50>%n %t%{-}%+w%<"
+#hardstatus string "%1`       %-w%{= BW}%50>%n %t%{-}%+w%<"
+hardstatus string "%{+b r}%H%{g} |%c %{r}%d.%m.%Y | %{b}%-w%{= BW}%50>%n %t%{-}%+w%<"
+vbell off
+
