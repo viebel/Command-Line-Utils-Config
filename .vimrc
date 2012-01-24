@@ -4,7 +4,8 @@ function! OnStart()
     tabfirst
 endfunction
 
-call pathogen#infect()
+call pathogen#infect() "pathogen: load plugins
+:Helptags "pathogen: generate documentation
 syntax on
 set incsearch
 set scrolloff=5 " alway show the last 5 lines of the file
@@ -17,6 +18,7 @@ set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
 nmap <F5> :wall \| :call Make()<CR>
+nmap <F6> :w \| :!clojure %<CR>
 " tab navigation 
 nmap <F2> :tabprevious<cr> 
 nmap <F3> :tabnext<cr> 
