@@ -1,0 +1,5 @@
+#!/bin/sh
+breakchars="(){}[],^%$#@\"\";:''|\\"
+rlwrap --remember --break-chars=${breakchars} --complete-filenames\
+       --file "$HOME"/.clj_completions  \
+       java -cp /usr/share/java/clojure.jar clojure.main
