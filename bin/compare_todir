@@ -1,0 +1,3 @@
+#!/bin/bash
+
+for x in `find . -type f | grep -v ".svn" `; do mydiff  $x $1/$x ; done 2>&1 

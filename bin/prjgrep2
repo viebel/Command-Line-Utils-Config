@@ -1,0 +1,1 @@
+find . \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" -o -name "*.js" -o -name "*.as" -o -name "*.html" \) |  grep -v "lib/jquery" | grep -v "jQuery/jquery" | xargs grep -n $*

@@ -1,0 +1,1 @@
+svn diff  http://svnserver/kcs/ROOT/frontend/trunk  http://svnserver/kcs/ROOT/frontend/branches/$1 

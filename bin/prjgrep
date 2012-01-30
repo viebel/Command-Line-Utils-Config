@@ -1,0 +1,1 @@
+find  . -regex ".*\.\(c\|cpp\|h\|hpp\|js\|as\|html\|rb\|erb\|mxml\)" | xargs grep --color -n $*

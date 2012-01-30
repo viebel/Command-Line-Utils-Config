@@ -1,0 +1,13 @@
+#!/bin/bash
+svn info "$1" &> /dev/null
+if [ $? != 0 ]
+then
+	exit $?
+fi
+
+if ! [ -e "$2" ]
+then
+	echo "Files $1 and $2 differ (No such file or directory)"
+else
+	diff -q "$1" "$2"
+fi
