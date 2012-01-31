@@ -200,4 +200,4 @@ au FileType javascript call JavaScriptFold()
 au FileType javascript setl fen
 
 let vimclojure#ParenRainbow=1
-
+au BufNewFile,BufRead *.clj setlocal lisp
