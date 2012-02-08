@@ -78,7 +78,7 @@ export PATH=$PATH:~/bin:~/.gem/ruby/1.8/bin/
 export PS1="\[\033[0m\][\[\033[33m\]${SHLVL}\[\033[0m\]|\[\033[34m\]\u\[\033[0m\]@\[\033[32m\]\h\[\033[0m\]|\[\033[36m\]\w\[\033[0m\]]\[\033[0m\]"
 
 source ~/screen-completion.bash
-set -o emacs #navigate the command line terminal in the emacs way
+set -o vi #navigate the command line terminal in the vi way
 alias cd=pushd
 export EDITOR=vi
 export VISUAL=vi
