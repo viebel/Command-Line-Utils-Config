@@ -28,6 +28,8 @@ nmap <C-n> :tabnew<cr>
 imap <C-n> <ESC>:tabnew<cr>
 nmap <C-x> :tabclose<cr> 
 
+set exrc "enable per-directory .vimrc files
+set secure "disable unsafe commands in local .vimrc files
 
 nmap ff :e **/<cfile><CR> 
 nmap rr :grep <cword> -w<CR>:copen<CR>
