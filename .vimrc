@@ -18,7 +18,7 @@ set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
 nmap <F5> :wall \| :call Make()<CR>
-nmap <F6> :w \| :!clojure %<CR>
+imap <F6> <Esc>:w \| :!clojure %<CR>
 " tab navigation 
 nmap <F2> :tabprevious<cr> 
 nmap <F3> :tabnext<cr> 
@@ -200,4 +200,6 @@ au FileType javascript call JavaScriptFold()
 au FileType javascript setl fen
 
 let vimclojure#ParenRainbow=1
-au BufNewFile,BufRead *.clj setlocal lisp
+au BufNewFile,BufRead *.clj set filetype=clojure
+au FileType clojure setlocal lisp 
+au FileType clojure setlocal makeprg=clojure\ %
