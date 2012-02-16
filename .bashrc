@@ -86,3 +86,5 @@ export VISUAL=vi
 #export IFS=$(echo -en "\n\b") # file separtor for the for loop
 export RUBYOPT=rubygems #needed for correct gem path
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+alias pbcopy='xclip -selection clipboard' #copy to clipboard
+alias pbpaste='xclip -selection clipboard -o' #paste from clipboard
