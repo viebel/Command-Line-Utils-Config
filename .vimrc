@@ -18,7 +18,7 @@ set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
 nmap <F5> :wall \| :call Make()<CR>
-imap <F6> <Esc>:w \| :!clojure %<CR>
+imap <F5><Esc> :wall \| :call Make()<CR>
 " tab navigation 
 nmap <F2> :tabprevious<cr> 
 nmap <F3> :tabnext<cr> 
