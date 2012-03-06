@@ -1,1 +1,1 @@
-find unitTest inline srcFlash -name '*.js' | xargs grep -n $*
+find unitTest inline srcFlash resource bin -regex '.*\.\(js\|html\|txt\|xml\)' | xargs grep --color -n $*
