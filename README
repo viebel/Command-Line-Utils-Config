@@ -1,0 +1,6 @@
+to install please:
+1. remove .screenrc .inputrc .bashrc .vimrc .vim from your home directory
+2. run ./install.sh
+
+it will create symbolic links on your home directory for the relevant files: .screenrc .inputrc .bashrc .vimrc .vim
+
