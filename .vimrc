@@ -11,7 +11,6 @@ filetype on
 syntax on
 filetype plugin indent on
 set incsearch
-set scrolloff=5 " alway show the last 5 lines of the file
 set history=100
 "set hlsearch "highlight search results
 set ai sw=4 sm si
@@ -48,125 +47,6 @@ nmap ; q:
 function! Make()
     make
     copen
-endfunction
-function! InsertTabWrapper() 
-    let col = col('.') - 1 
-    if !col || getline('.')[col - 1] !~ '\k' 
-	return "\<tab>" 
-    else 
-	return "\<c-p>" 
-    endif 
-endfunction 
-"use tab for completion
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-"When jumping on a tag, automatically split the window if the current buffer has been modified
-fun! SPLITAG() range 
-        let oldfile=expand("%:p") 
-        if &modified 
-                split 
-        endif 
-        exe "tag ". expand("<cword>") 
-        let curfile=expand("%:p") 
-        if curfile == oldfile 
-                let pos=getpos(".") 
-
-                if &modified 
-              " if we have splitted before: 
-                        quit 
-                endif 
-                call setpos('.', pos) 
-        endif 
-endfun   
-fun! SplitIfBufferModified()
-    "if &modified 
-        only
-        split 
-    "endif 
-endfun
-"When you want to jump to a definition of a variable, 
-"what do you do? 
-"Use C-] or gd? 
-"C-] finds only global variables (and functions. Ctags extracts 
-"only global objects). 
-"On the other hand, gd detects only local variables. 
-"I think it's a bit complicated to choice them by a situation. 
-"So I wrote this function: 
-"nmap <C-]> :call GoDefinition()<CR>         
-"nmap <C-]>   :call SPLITAG()<CR>.
-function! GoDefinitionLocalThenGlobal() 
-  let pos = getpos(".") 
-  normal! gd 
-  if getpos(".") == pos 
-    exe "call SplitIfBufferModified()"
-    exe "tag /" . expand("<cword>") 
-  endif 
-endfunction 
-
-nmap <C-]> :call GoDefinitionLocalThenGlobal()<CR>         
-
-  "This is a function to show what C/C++ function/struct/class the cursor is in.
-  function! GetProtoLine()
-    let ret       = ""
-    let line_save = line(".")
-    let col_save  = col(".")
-    let top       = line_save - winline() + 1
-    let so_save = &so
-    let &so = 0
-    let istypedef = 0
-    " find closing brace
-    let closing_lnum = search('^}','cW')
-    if closing_lnum > 0
-      if getline(line(".")) =~ '\w\s*;\s*$'
-        let istypedef = 1
-        let closingline = getline(".")
-      endif
-      " go to the opening brace
-      normal! %
-      " if the start position is between the two braces
-      if line(".") <= line_save
-        if istypedef
-          let ret = matchstr(closingline, '\w\+\s*;')
-        else
-          " find a line contains function name
-      let lnum = search('^\w','bcnW')
-          if lnum > 0
-            let ret = getline(lnum)
-          endif
-        endif
-      endif
-    endif
-    " restore position and screen line
-    exe "normal! " . top . "Gz\<CR>"
-    call cursor(line_save, col_save)
-    let &so = so_save
-    return ret
-  endfunction
-  function! WhatFunction()
-    if &ft != "c" && &ft != "cpp"
-      return ""
-    endif
-    let proto = GetProtoLine()
-    if proto == ""
-      return "?"
-    endif
-    if stridx(proto, '(') > 0
-      let ret = proto "matchstr(proto, '\w\+(\@=')
-    elseif proto =~# '\<struct\>'
-      let ret = matchstr(proto, 'struct\s\+\w\+')
-    elseif proto =~# '\<class\>'
-      let ret = matchstr(proto, 'class\s\+\w\+')
-    else
-      let ret = strpart(proto, 0, 15) . "..."
-    endif
-    return ret
-  endfunction
-  " call WhatFunction in the statusline
-"  set statusline=%{WhatFunction()}\ %m%=\ %l-%v\ %p%%\ %02B
-" map \ff to display function name
-nmap <Leader>gg :echo WhatFunction()<CR>
-function! PrintLine()
-    let ret = getline(".")
-    return ret
 endfunction
 "Here are some settings for diff mode
 if &diff
