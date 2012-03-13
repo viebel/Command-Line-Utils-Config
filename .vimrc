@@ -7,6 +7,9 @@ endfunction
 call pathogen#infect() "pathogen: load plugins
 :Helptags "pathogen: generate documentation
 syntax on
+filetype on
+syntax on
+filetype plugin indent on
 set incsearch
 set scrolloff=5 " alway show the last 5 lines of the file
 set history=100
@@ -40,7 +43,6 @@ nmap <F10> <F10>i
 "set pastetoggle=<Leader>pp "use \pp to toggle between paste and nopaste
 set laststatus=2
 set grepprg=prjgrep\ $*\ dev/null
-filetype on
 " use ; to enter command window
 nmap ; q:
 function! Make()
@@ -161,7 +163,7 @@ nmap <C-]> :call GoDefinitionLocalThenGlobal()<CR>
   " call WhatFunction in the statusline
 "  set statusline=%{WhatFunction()}\ %m%=\ %l-%v\ %p%%\ %02B
 " map \ff to display function name
-nmap <Leader>ff :echo WhatFunction()<CR>
+nmap <Leader>gg :echo WhatFunction()<CR>
 function! PrintLine()
     let ret = getline(".")
     return ret
