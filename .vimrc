@@ -87,5 +87,4 @@ au FileType javascript setl fen
 
 let vimclojure#ParenRainbow=1
 au BufNewFile,BufRead *.clj set filetype=clojure
-au FileType clojure setlocal lisp 
 au FileType clojure setlocal makeprg=clojure\ %
