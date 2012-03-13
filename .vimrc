@@ -42,7 +42,7 @@ nmap <F10> <F10>i
 "set pastetoggle=<Leader>pp "use \pp to toggle between paste and nopaste
 set laststatus=2
 "use tab for completion
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <tab> <c-p>
 
 set grepprg=prjgrep\ $*\ dev/null
 " use ; to enter command window
