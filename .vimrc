@@ -41,6 +41,9 @@ set pastetoggle=<F10> "use \pp to toggle between paste and nopaste
 nmap <F10> <F10>i
 "set pastetoggle=<Leader>pp "use \pp to toggle between paste and nopaste
 set laststatus=2
+"use tab for completion
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+
 set grepprg=prjgrep\ $*\ dev/null
 " use ; to enter command window
 nmap ; q:
