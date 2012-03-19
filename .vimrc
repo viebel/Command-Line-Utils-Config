@@ -6,13 +6,21 @@ endfunction
 
 call pathogen#infect() "pathogen: load plugins
 :Helptags "pathogen: generate documentation
+set nocompatible
 syntax on
 filetype on
 syntax on
 filetype plugin indent on
+" Don't update the display while executing macros
+set lazyredraw
+" At least let yourself know what mode you're in
+set showmode
 set incsearch
-set history=100
+set history=10000
 "set hlsearch "highlight search results
+" Enable enhanced command-line completion. Presumes you have compiled
+" with +wildmenu.  See :help 'wildmenu'
+set wildmenu
 set ai sw=4 sm si
 set tabstop=4
 set expandtab
