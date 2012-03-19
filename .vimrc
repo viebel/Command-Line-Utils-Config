@@ -16,6 +16,7 @@ set history=100
 set ai sw=4 sm si
 set tabstop=4
 set expandtab
+set foldmethod=indent
 set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
