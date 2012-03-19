@@ -7,10 +7,13 @@ endfunction
 call pathogen#infect() "pathogen: load plugins
 :Helptags "pathogen: generate documentation
 set nocompatible
-syntax on
+"the order of the following lines until syntax on is crucial for matchit.vim
+"see http://stackoverflow.com/q/1440292/813665
+so $VIMRUNTIME/macros/matchit.vim
 filetype on
-syntax on
 filetype plugin indent on
+filetype detect
+syntax on
 " Don't update the display while executing macros
 set lazyredraw
 " At least let yourself know what mode you're in
