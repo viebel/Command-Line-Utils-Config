@@ -57,17 +57,15 @@ fi
 
 bind '"\C-t":history-search-backward'
 
-export PATH=$PATH:~/bin:~/.gem/ruby/1.8/bin/
+export PATH=$PATH:~/bin:~/Command-Line-Utils-Config/bin
 
-
-source ~/screen-completion.bash
 set -o vi #navigate the command line terminal in the vi way
 alias cd=pushd
 export EDITOR=vi
 export VISUAL=vi
 #ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
 #export IFS=$(echo -en "\n\b") # file separtor for the for loop
-export RUBYOPT=rubygems #needed for correct gem path
+#export RUBYOPT=rubygems #needed for correct gem path
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 alias pbcopy='xclip -selection clipboard' #copy to clipboard
 alias pbpaste='xclip -selection clipboard -o' #paste from clipboard
