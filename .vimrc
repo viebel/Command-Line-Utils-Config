@@ -68,10 +68,6 @@ if &diff
   set diffopt=iwhite "ignore white spaces in diff
 "<Ctrl-c> Close all windows
   nmap <C-c> :qall<CR>
-"display current line in the command window
-  set updatetime=500
-  au CursorHold * echo PrintLine()
-  set cmdheight=2
 "fix the colors 
 
   set diffopt=filler,iwhite,icase,context:6
