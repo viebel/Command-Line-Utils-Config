@@ -2,7 +2,7 @@
 repository_folder=`pwd`
 echo $repository_folder
 cd $HOME
-for x in .bashrc .vimrc .screenrc .inputrc .vim .gitignore; do 
+for x in .zshrc .bashrc .vimrc .screenrc .inputrc .vim .gitignore bin; do 
     if [ -a $x ]; then
         echo "please remove $x"
     else 
