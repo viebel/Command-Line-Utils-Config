@@ -35,3 +35,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:$HOME/bin
+set -o vi #navigate the command line terminal in the vi way
+export EDITOR=vi
+export VISUAL=vi
