@@ -2,4 +2,4 @@
 breakchars="(){}[],^%$#@\"\";:''|\\"
 rlwrap --remember --break-chars=${breakchars} --complete-filenames\
        --file "$HOME"/.clj_completions  \
-       clojure-repl
+       clj

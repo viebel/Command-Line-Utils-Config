@@ -32,6 +32,7 @@ set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
 nmap <F5> :wall \| :call Make()<CR>
+nmap <F8> :cnext<CR>
 imap <F5><Esc> :wall \| :call Make()<CR>
 nmap <F6> :wall \| :!clojure %<CR>
 imap <F6><Esc> :wall \| :!clojure %<CR>
@@ -102,4 +103,20 @@ au FileType clojure setlocal makeprg=clojure\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+"auto save/load of undo files
+au BufReadPost * call ReadUndo()
+au BufWritePost * call WriteUndo()
+func ReadUndo()
+  if filereadable(expand('%:h'). '/UNDO/' . expand('%:t'))
+    rundo %:h/UNDO/%:t
+  endif
+endfunc
+func WriteUndo()
+  let dirname = expand('%:h') . '/UNDO'
+  if !isdirectory(dirname)
+    call mkdir(dirname)
+  endif
+  wundo %:h/UNDO/%:t
+endfunc
 
