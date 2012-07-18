@@ -105,8 +105,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 "auto save/load of undo files
-au BufReadPost * call ReadUndo()
-au BufWritePost * call WriteUndo()
+"au BufReadPost * call ReadUndo()
+"au BufWritePost * call WriteUndo()
 func ReadUndo()
   if filereadable(expand('%:h'). '/UNDO/' . expand('%:t'))
     rundo %:h/UNDO/%:t
@@ -119,4 +119,5 @@ func WriteUndo()
   endif
   wundo %:h/UNDO/%:t
 endfunc
+set undodir=~/.vim/UNDO
 
