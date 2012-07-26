@@ -69,3 +69,5 @@ export VISUAL=vi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 alias pbcopy='xclip -selection clipboard' #copy to clipboard
 alias pbpaste='xclip -selection clipboard -o' #paste from clipboard
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

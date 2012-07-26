@@ -104,6 +104,12 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
+let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}
+let g:htmlbeautify = {'indent_size': 4, 'indent_char': ' ', 'max_char': 78, 'brace_style': 'expand', 'unformatted': ['a', 'sub', 'sup', 'b', 'i', 'u']}
+let g:cssbeautify = {'indent_size': 4, 'indent_char': ' '}
+map <c-f> :call JsBeautify()<cr>
+
+
 "auto save/load of undo files
 "au BufReadPost * call ReadUndo()
 "au BufWritePost * call WriteUndo()
