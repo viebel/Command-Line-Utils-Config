@@ -103,6 +103,8 @@ au FileType clojure setlocal makeprg=clojure\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+au FileType ruby setl sw=2 sts=2 et
+
 
 let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}
 let g:htmlbeautify = {'indent_size': 4, 'indent_char': ' ', 'max_char': 78, 'brace_style': 'expand', 'unformatted': ['a', 'sub', 'sup', 'b', 'i', 'u']}
