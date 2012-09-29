@@ -103,7 +103,9 @@ au FileType clojure setlocal makeprg=clojure\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+au FileType python setlocal makeprg=python3\ %
 au FileType ruby setl sw=2 sts=2 et
+au FileType python setl sw=2 sts=2 et
 
 
 let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}
@@ -115,17 +117,17 @@ map <c-f> :call JsBeautify()<cr>
 "auto save/load of undo files
 "au BufReadPost * call ReadUndo()
 "au BufWritePost * call WriteUndo()
-func ReadUndo()
-  if filereadable(expand('%:h'). '/UNDO/' . expand('%:t'))
-    rundo %:h/UNDO/%:t
-  endif
-endfunc
-func WriteUndo()
-  let dirname = expand('%:h') . '/UNDO'
-  if !isdirectory(dirname)
-    call mkdir(dirname)
-  endif
-  wundo %:h/UNDO/%:t
-endfunc
+"func ReadUndo()
+"  if filereadable(expand('%:h'). '/UNDO/' . expand('%:t'))
+"    rundo %:h/UNDO/%:t
+"  endif
+"endfunc
+"func WriteUndo()
+"  let dirname = expand('%:h') . '/UNDO'
+"  if !isdirectory(dirname)
+"    call mkdir(dirname)
+"  endif
+"  wundo %:h/UNDO/%:t
+"endfunc
 set undodir=~/.vim/UNDO
 
