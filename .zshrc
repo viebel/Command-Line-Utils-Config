@@ -36,7 +36,7 @@ plugins=(git osx ruby brew lein rvm)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/bin
 set -o vi #navigate the command line terminal in the vi way
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
