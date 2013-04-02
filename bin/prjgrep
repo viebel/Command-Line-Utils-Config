@@ -1,2 +1,2 @@
-find  . -regex ".*\.\(c\|cpp\|h\|hpp\|js\|as\|html\|rb\|erb\|mxml\|clj\|java\)" | xargs grep --color -n $*
+find  . -regex ".*\.\(c\|css\|cpp\|h\|hpp\|js\|as\|html\|rb\|erb\|mxml\|clj\|java\)" | xargs grep --color -n $*
 #find  -E . -regex ".*.(c|cpp|h|hpp|js|as|html|rb|erb|mxml|clj)$" | xargs grep --color -n $*

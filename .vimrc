@@ -100,6 +100,7 @@ au FileType javascript setl fen
 let vimclojure#ParenRainbow=1
 au BufNewFile,BufRead *.clj set filetype=clojure
 au FileType clojure setlocal makeprg=clojure\ %
+au FileType ruby setlocal makeprg=ruby\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
