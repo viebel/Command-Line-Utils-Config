@@ -1,2 +1,2 @@
-find  . -regex ".*\.\(c\|yml\|cpp\|h\|hpp\|js\|as\|html\|rb\|erb\|mxml\|clj\|java\)" | xargs grep --color -n $*
+find  . -regex ".*\.\(c\|coffee\|feature\|css\|scss\|yml\|cpp\|h\|hpp\|js\|as\|html\|rb\|erb\|mxml\|clj\|java\)" | xargs grep --color -n $*
 #find  -E . -regex ".*.(c|cpp|yml|h|hpp|js|as|html|rb|erb|mxml|clj|java|scala)$" | xargs grep --color -n $*
