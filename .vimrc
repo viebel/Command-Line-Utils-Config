@@ -104,6 +104,7 @@ au BufNewFile,BufRead *.dust set filetype=html
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au FileType clojure setlocal makeprg=clojure\ %
 au FileType coffee setlocal makeprg=coffeelint\ %
+au FileType ruby setlocal makeprg=ruby\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
