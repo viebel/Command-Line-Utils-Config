@@ -10,3 +10,6 @@
 [submodule ".vim/bundle/vim-jsbeautify"]
 	path = .vim/bundle/vim-jsbeautify
 	url = https://github.com/maksimr/vim-jsbeautify.git
+[submodule ".vim/bundle/vim-coffee-script-my"]
+	path = .vim/bundle/vim-coffee-script-my
+	url = https://github.com/kchmck/vim-coffee-script.git

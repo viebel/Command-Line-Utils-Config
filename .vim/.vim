@@ -1,1 +1,1 @@
-/home/viebel/Command-Line-Utils-Config/.vim
+/Users/viebel/Command-Line-Utils-Config/.vim

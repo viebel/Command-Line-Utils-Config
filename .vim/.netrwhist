@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/viebel/shefing/vendor/assets'
 let g:netrw_dirhist_2='/home/viebel/shefing/vendor/assets/javascripts'
+let g:netrw_dirhist_3='/Users/viebel/prj/shefing/app/assets/javascripts/checkout'
+let g:netrw_dirhist_4='/Users/viebel/prj/shefing/app/assets/javascripts'
