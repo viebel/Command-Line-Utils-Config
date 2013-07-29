@@ -13,6 +13,7 @@ so $VIMRUNTIME/macros/matchit.vim
 filetype on
 filetype plugin indent on
 filetype detect
+set lisp 
 syntax on
 " Don't update the display while executing macros
 set lazyredraw
@@ -99,7 +100,10 @@ au FileType javascript setl fen
 
 let vimclojure#ParenRainbow=1
 au BufNewFile,BufRead *.clj set filetype=clojure
+au BufNewFile,BufRead *.dust set filetype=html
+au BufNewFile,BufRead *.coffee set filetype=coffee
 au FileType clojure setlocal makeprg=clojure\ %
+au FileType coffee setlocal makeprg=coffeelint\ %
 au FileType ruby setlocal makeprg=ruby\ %
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -107,6 +111,8 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 au FileType python setlocal makeprg=python3\ %
 au FileType ruby setl sw=2 sts=2 et
 au FileType python setl sw=2 sts=2 et
+au BufRead,BufNewFile *.scss set filetype=scss
+
 
 
 let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}

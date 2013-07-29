@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/viebel/shefing/vendor/assets'
+let g:netrw_dirhist_2='/home/viebel/shefing/vendor/assets/javascripts'
+let g:netrw_dirhist_3='/Users/viebel/prj/shefing/app/assets/javascripts/checkout'
+let g:netrw_dirhist_4='/Users/viebel/prj/shefing/app/assets/javascripts'
+let g:netrw_dirhist_5='/Users/viebel/prj/shefing/config'
+let g:netrw_dirhist_6='/Users/viebel/prj/shefing/config/settings'
+let g:netrw_dirhist_7='/Users/viebel/prj/shefing/config'
+let g:netrw_dirhist_8='/Users/viebel/prj/shefing/config/environments'
+let g:netrw_dirhist_9='/Users/viebel/prj/shefing/db'
