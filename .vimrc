@@ -7,6 +7,7 @@ endfunction
 call pathogen#infect() "pathogen: load plugins
 :Helptags "pathogen: generate documentation
 set nocompatible
+set ruler
 "the order of the following lines until syntax on is crucial for matchit.vim
 "see http://stackoverflow.com/q/1440292/813665
 so $VIMRUNTIME/macros/matchit.vim
@@ -44,7 +45,7 @@ imap <F2> <Esc>:tabprevious<cr>
 imap <F3> <Esc>:tabnext<cr> 
 nmap <C-n> :tabnew<cr> 
 imap <C-n> <ESC>:tabnew<cr>
-nmap <C-x> :tabclose<cr> 
+nmap <C-d> :tabclose<cr> 
 
 set exrc "enable per-directory .vimrc files
 set secure "disable unsafe commands in local .vimrc files
