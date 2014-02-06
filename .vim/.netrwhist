@@ -1,11 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/viebel/prj/shefing/config'
-let g:netrw_dirhist_2='/Users/viebel/prj/shefing/app/assets/javascripts/facepile'
-let g:netrw_dirhist_3='/Users/viebel/prj/shefing/app/controllers'
-let g:netrw_dirhist_4='/Users/viebel/prj/shefing-fb'
-let g:netrw_dirhist_5='/Users/viebel/prj/shefing-fb/src'
-let g:netrw_dirhist_6='/Users/viebel/prj/shefing/app/assets/javascripts/checkout'
-let g:netrw_dirhist_7='/Users/viebel/tutorial/modern-cljs/resources/public'
-let g:netrw_dirhist_8='/Users/viebel/tutorial/modern-cljs/src/cljs'
-let g:netrw_dirhist_9='/Users/viebel/tutorial/modern-cljs-me/src/cljs/modern_cljs'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/viebel/prj/sounds-cljs/src/cljs/sounds_cljs/controllers'
+let g:netrw_dirhist_2='/Users/viebel/prj/sounds-cljs'
