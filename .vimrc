@@ -15,7 +15,7 @@ so $VIMRUNTIME/macros/matchit.vim
 filetype on
 filetype plugin indent on
 filetype detect
-set lisp 
+"set lisp => it causes bad indentation in clojure's let statement
 syntax on
 " Don't update the display while executing macros
 set lazyredraw
@@ -118,9 +118,9 @@ au BufRead,BufNewFile *.scss set filetype=scss
 
 
 
-let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}
-let g:htmlbeautify = {'indent_size': 4, 'indent_char': ' ', 'max_char': 78, 'brace_style': 'expand', 'unformatted': ['a', 'sub', 'sup', 'b', 'i', 'u']}
-let g:cssbeautify = {'indent_size': 4, 'indent_char': ' '}
+"let g:jsbeautify = {'indent_size': 4, 'indent_char': ' '}
+"let g:htmlbeautify = {'indent_size': 4, 'indent_char': ' ', 'max_char': 78, 'brace_style': 'expand', 'unformatted': ['a', 'sub', 'sup', 'b', 'i', 'u']}
+"let g:cssbeautify = {'indent_size': 4, 'indent_char': ' '}
 map <c-f> :call JsBeautify()<cr>
 
 
