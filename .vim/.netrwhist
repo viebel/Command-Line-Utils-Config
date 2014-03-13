@@ -1,3 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/Users/viebel/libs/purnam/src/cljs/purnam'
+let g:netrw_dirhist_2='/Users/viebel/prj/audyx/app/assets/javascripts'
+let g:netrw_dirhist_3='/Users/viebel/prj/audyx/app/assets/javascripts/lib'
+let g:netrw_dirhist_4='/Users/viebel/prj/audyx/app/assets/javascripts'
+let g:netrw_dirhist_5='/Users/viebel/prj/audyx/vendor/assets/bower_components/angular'
+let g:netrw_dirhist_6='/Users/viebel/prj/audyx/clojurescript-src/test/cljs/sounds_cljs/services'
+let g:netrw_dirhist_7='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/sounds_cljs/services'
