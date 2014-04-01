@@ -100,9 +100,13 @@ endfunction
 au FileType javascript call JavaScriptFold()
 au FileType javascript setl fen
 
-let vimclojure#ParenRainbow=1
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 au BufNewFile,BufRead *.clj set filetype=clojure
 au BufNewFile,BufRead *.cljs set filetype=clojure
+au BufNewFile,BufRead *.cljx set filetype=clojure
 au BufNewFile,BufRead *.dust set filetype=html
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au FileType clojure setlocal makeprg=clojure\ %
