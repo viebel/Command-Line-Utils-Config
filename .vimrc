@@ -30,7 +30,7 @@ set wildmenu
 set ai sw=4 sm si
 set tabstop=4
 set expandtab
-set foldmethod=indent
+"set foldmethod=indent
 set viminfo='10,%
 nmap <F4> <Leader>be
 imap <F4> <Esc><Leader>be
@@ -163,4 +163,6 @@ autocmd FileType html map <buffer> <c-f> :call HtmlBeautify()<cr>
 "  wundo %:h/UNDO/%:t
 "endfunc
 set undodir=~/.vim/UNDO
-
+let @q = '%xxdw' "remove dbg
+let @d = 'i(dbg €kr%i)' "insert dbg around an s-expr
+let @w = 'i(dbg €krwi)' "insert dbg around a word

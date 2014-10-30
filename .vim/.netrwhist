@@ -1,10 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/Users/viebel/prj/audyx/clojurescript-src/test/cljs/audyx'
-let g:netrw_dirhist_2='/Users/viebel/prj/audyx/clojurescript-src/test/cljs/audyx/services'
-let g:netrw_dirhist_3='/Users/viebel/prj/audyx/app/assets/javascripts/services'
-let g:netrw_dirhist_4='/Users/viebel/prj/audyx/app/controllers'
-let g:netrw_dirhist_5='/Users/viebel/prj/audyx/app/assets/javascripts/services'
-let g:netrw_dirhist_6='/Users/viebel/prj/audyx/app/models'
-let g:netrw_dirhist_7='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/directives'
-let g:netrw_dirhist_8='/Users/viebel/prj/audyx/app/assets/javascripts/controllers'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/viebel/prj/audyx/app/views/devise'
+let g:netrw_dirhist_2='/Users/viebel/prj/audyx/app/views/devise/sessions'
+let g:netrw_dirhist_3='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/utils'
+let g:netrw_dirhist_4='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/macros'

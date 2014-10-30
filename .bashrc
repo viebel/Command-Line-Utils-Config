@@ -57,9 +57,10 @@ fi
 
 bind '"\C-t":history-search-backward'
 
+export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:~/bin:~/Command-Line-Utils-Config/bin:/opt/local/bin
 
-set -o vi #navigate the command line terminal in the vi way
+#set -o vi #navigate the command line terminal in the vi way
 alias cd=pushd
 export EDITOR=vi
 export VISUAL=vi
