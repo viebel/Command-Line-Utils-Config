@@ -60,7 +60,7 @@ set laststatus=2
 "use tab for completion
 inoremap <tab> <c-p>
 
-set grepprg=prjgrep\ $*\ dev/null
+set grepprg=prjgrep\ $* 
 " use ; to enter command window
 nmap ; q:
 function! Make()
@@ -124,7 +124,7 @@ let g:rbpt_colorpairs = [
     \ ]
 au BufNewFile,BufRead *.clj set filetype=clojure
 au BufNewFile,BufRead *.cljs set filetype=clojure
-au BufNewFile,BufRead *.cljx set filetype=clojure
+au BufNewFile,BufRead *.cljc set filetype=clojure
 au BufNewFile,BufRead *.dust set filetype=html
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au FileType clojure setlocal makeprg=clojure\ %
@@ -165,4 +165,5 @@ autocmd FileType html map <buffer> <c-f> :call HtmlBeautify()<cr>
 set undodir=~/.vim/UNDO
 let @q = '%xxdw' "remove dbg
 let @d = 'i(dbg €kr%i)' "insert dbg around an s-expr
+let @l = 'i(log €kr%i)' "insert  around an s-expr
 let @w = 'i(dbg €krwi)' "insert dbg around a word

@@ -1,6 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/Users/viebel/prj/audyx/app/views/devise'
-let g:netrw_dirhist_2='/Users/viebel/prj/audyx/app/views/devise/sessions'
-let g:netrw_dirhist_3='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/utils'
-let g:netrw_dirhist_4='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/macros'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/viebel/prj/audyx/clojurescript-src/test/cljs/test/app'
+let g:netrw_dirhist_2='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/pdf'
+let g:netrw_dirhist_3='/Users/viebel/prj/audyx/cabine-src'
