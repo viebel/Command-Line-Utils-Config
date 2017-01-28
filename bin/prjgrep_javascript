@@ -1,3 +1,0 @@
-#find unitTest inline srcFlash resource ab bin -regex '.*\.\(js\|html\|txt\|xml\)' | xargs grep --color -n $*
-find ../tapestry/public tests/newLayer unitTest inline ab srcFlash srcHtml resource -regex '.*.[js\|rb\|html\|txt\|xml\|css]' | xargs grep --color -n $* | grep -v -E ".*\:.*\:\/\*global"
-

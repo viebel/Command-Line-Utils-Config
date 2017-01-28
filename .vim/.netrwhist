@@ -1,5 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/viebel/prj/audyx/clojurescript-src/test/cljs/test/app'
-let g:netrw_dirhist_2='/Users/viebel/prj/audyx/clojurescript-src/src/cljs/audyx/pdf'
-let g:netrw_dirhist_3='/Users/viebel/prj/audyx/cabine-src'
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/viebel/libs/codemirror-parinfer'
+let g:netrw_dirhist_2='/Users/viebel/libs/codemirror-parinfer/parinfer_codemirror'
+let g:netrw_dirhist_3='/Users/viebel/libs/codemirror-parinfer/src'
+let g:netrw_dirhist_4='/Users/viebel/libs/codemirror-parinfer/src/parinfer_codemirror'
+let g:netrw_dirhist_5='/Users/viebel/aa'

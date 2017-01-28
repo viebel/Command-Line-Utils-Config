@@ -63,10 +63,10 @@ inoremap <tab> <c-p>
 set grepprg=prjgrep\ $* 
 " use ; to enter command window
 nmap ; q:
-function! Make()
-    make
-    copen
-endfunction
+
+"display trailing whitespaces
+set list listchars=tab:\|_,trail:·
+
 "Here are some settings for diff mode
 if &diff
   set diffopt=iwhite "ignore white spaces in diff
@@ -145,6 +145,8 @@ au BufRead,BufNewFile *.scss set filetype=scss
 "let g:cssbeautify = {'indent_size': 4, 'indent_char': ' '}
 autocmd FileType javascript map <buffer> <c-f> :call JsBeautify()<cr>
 autocmd FileType html map <buffer> <c-f> :call HtmlBeautify()<cr>
+au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+
 
 
 "auto save/load of undo files
@@ -165,5 +167,5 @@ autocmd FileType html map <buffer> <c-f> :call HtmlBeautify()<cr>
 set undodir=~/.vim/UNDO
 let @q = '%xxdw' "remove dbg
 let @d = 'i(dbg €kr%i)' "insert dbg around an s-expr
-let @l = 'i(log €kr%i)' "insert  around an s-expr
+let @l = 'i(log €kr%i)' "insert  log around an s-expr
 let @w = 'i(dbg €krwi)' "insert dbg around a word
