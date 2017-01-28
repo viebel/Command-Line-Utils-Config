@@ -51,6 +51,8 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git rvm heroku git-flow zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+export EDITOR=emacs
+export VISUAL=emacs
 
 
 # User configuration
