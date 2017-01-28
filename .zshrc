@@ -41,8 +41,8 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbi
 set -o vi 
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
-export EDITOR=vi
-export VISUAL=vi
+export EDITOR=emacs
+export VISUAL=emacs
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
