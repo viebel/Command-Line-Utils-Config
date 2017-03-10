@@ -8,17 +8,20 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 (setq package-enable-at-startup nil)
+(setq package-check-signature nil)
 (package-initialize)
 
-(global-set-key (kbd "M-[ d") 'paredit-forward-barf-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
-(global-set-key (kbd "M-[ c") 'paredit-forward-slurp-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
+;(global-set-key (kbd "M-[ D") 'paredit-forward-barf-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
+;(global-set-key (kbd "C-<left>") 'paredit-forward-barf-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
+;(global-set-key (kbd "C-<right>") 'paredit-forward-slurp-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
+;(global-set-key (kbd "ESC [ 1 ; 5 D") 'paredit-forward-slurp-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
+;(global-set-key (kbd "ESC O D [left-char]") 'paredit-forward-slurp-sexp) ; inside tmux "ctrl-<left>" becomes "M-[ d"
 
 
-;; enter paredit mode when entering the clojure major mode
 (add-hook 'clojure-mode-hook 'paredit-mode)
 ;; --- http://fgiasson.com/blog/index.php/2016/06/14/my-optimal-gnu-emacs-settings-for-developing-clojure-revised/ ---
 ;; Enter cider mode when entering the clojure major mode
-(add-hook 'clojure-mode-hook 'cider-mode)
+;(add-hook 'clojure-mode-hook 'cider-mode)
 
 
 ;; Turn on auto-completion with Company-Mode
@@ -122,3 +125,33 @@
 
 ;; --- end of http://fgiasson.com/blog/index.php/2016/06/14/my-optimal-gnu-emacs-settings-for-developing-clojure-revised/ --- 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;cider cljs - see: https://github.com/Day8/re-frame-template
+(setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+
+;; see https://github.com/clojure-emacs/clj-refactor.el
+
+(require 'clj-refactor)
+(setq cljr-auto-clean-ns nil))
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
