@@ -132,7 +132,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
+    (rjsx-mode js2-mode helm helm-git-grep php-mode multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -146,7 +146,7 @@
 ;; see https://github.com/clojure-emacs/clj-refactor.el
 
 (require 'clj-refactor)
-(setq cljr-auto-clean-ns nil))
+(setq cljr-auto-clean-ns nil)
 
 (defun my-clojure-mode-hook ()
     (clj-refactor-mode 1)
@@ -155,3 +155,13 @@
     (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+;; https://github.com/yasuyk/helm-git-grep
+(global-set-key (kbd "C-c g") 'helm-git-grep)
+
+;; reload buffers automatically
+(global-auto-revert-mode t)
+
+
+;; rjsx-mode for js files https://github.com/felipeochoa/rjsx-mode
+(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))

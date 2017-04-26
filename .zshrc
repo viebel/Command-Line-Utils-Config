@@ -54,10 +54,11 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR=emacs
 export VISUAL=emacs
 
+source $HOME/.rvm/scripts/rvm
 
 # User configuration
 
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/viebel/bin:/Users/viebel/.rvm/bin"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/viebel/bin:/Users/viebel/.rvm/bin:`yarn global bin`:/Users/viebel/Library/Python/2.7/bin/"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # # Preferred editor for local and remote sessions
@@ -73,7 +74,6 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/heroku/bin:/usr/lo
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 # for cljs dev https://github.com/clojure/clojurescript/wiki/Running-the-tests
 export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.9/
 PATH=$PATH:/Applications/WebKit.app/Contents/Frameworks/10.9/JavaScriptCore.framework/Resources
@@ -90,7 +90,6 @@ alias cljsbuild="lein trampoline cljsbuild $@"
 export JAVA_HOME=`/usr/libexec/java_home -V`
 
 export PATH="$HOME/.yarn/bin:$PATH"
-
 
 # Android SDK
 
@@ -111,3 +110,6 @@ if [ -f /Users/viebel/google-cloud-sdk/completion.zsh.inc ]; then
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#very important for gpg (and for lein deploy) - http://unix.stackexchange.com/questions/217737/pinentry-fails-with-gpg-agent-and-ssh
+export GPG_TTY=`tty`
