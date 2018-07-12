@@ -82,6 +82,7 @@ export JSC_HOME=/Applications/WebKit.app/Contents/Frameworks/10.9/JavaScriptCore
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+export PATH="./node_modules/.bin/:$PATH"
 ### fast cljsbuild
 LEIN_FAST_TRAMPOLINE=y
 export LEIN_FAST_TRAMPOLINE
@@ -113,3 +114,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 #very important for gpg (and for lein deploy) - http://unix.stackexchange.com/questions/217737/pinentry-fails-with-gpg-agent-and-ssh
 export GPG_TTY=`tty`
+
+# OPAM configuration
+. /Users/viebel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
