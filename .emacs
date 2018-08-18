@@ -130,15 +130,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(find-name-arg "-iname")
  '(package-selected-packages
    (quote
-    (rjsx-mode js2-mode helm helm-git-grep php-mode multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
+    (rainbow-mode rjsx-mode js2-mode helm helm-git-grep php-mode multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "#F0B27A"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "magenta"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "#DAF7A6")))))
 
 ;cider cljs - see: https://github.com/Day8/re-frame-template
 (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
@@ -159,9 +162,10 @@
 ;; https://github.com/yasuyk/helm-git-grep
 (global-set-key (kbd "C-c g") 'helm-git-grep)
 
+(global-set-key (kbd "C-x f") 'find-name-dired)
 ;; reload buffers automatically
 (global-auto-revert-mode t)
 
 
-;; rjsx-mode for js files https://github.com/felipeochoa/rjsx-mode
-(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+(require 'ido)
+(ido-mode t)

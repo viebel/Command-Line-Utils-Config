@@ -51,10 +51,12 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git rvm heroku git-flow zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-export EDITOR=emacs
-export VISUAL=emacs
+export EDITOR="emacs -nw"
+export VISUAL="emacs -nw"
 
-source $HOME/.rvm/scripts/rvm
+if [ -f $HOME/.rvm/scripts/rvm ]; then
+  source $HOME/.rvm/scripts/rvm
+fi
 
 # User configuration
 
@@ -87,9 +89,7 @@ export PATH="./node_modules/.bin/:$PATH"
 LEIN_FAST_TRAMPOLINE=y
 export LEIN_FAST_TRAMPOLINE
 alias cljsbuild="lein trampoline cljsbuild $@"
-
-export JAVA_HOME=`/usr/libexec/java_home -V`
-
+alias emacs='emacs -nw'
 export PATH="$HOME/.yarn/bin:$PATH"
 
 # Android SDK
@@ -117,3 +117,6 @@ export GPG_TTY=`tty`
 
 # OPAM configuration
 . /Users/viebel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
