@@ -114,9 +114,3 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 #very important for gpg (and for lein deploy) - http://unix.stackexchange.com/questions/217737/pinentry-fails-with-gpg-agent-and-ssh
 export GPG_TTY=`tty`
-
-# OPAM configuration
-. /Users/viebel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"

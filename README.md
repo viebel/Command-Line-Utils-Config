@@ -1,8 +1,6 @@
 to install please do:
 
 ```bash
-cd ~
-rm .screenrc .inputrc .bashrc .vimrc .vim
 ./install.sh
 ```
 
