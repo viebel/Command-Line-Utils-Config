@@ -11,3 +11,7 @@ tramp
 .\#*
 .DS_Store
 .vscode
+.cpcache
+.idea
+.rebel_readline_history
+*.iml
