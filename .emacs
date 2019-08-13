@@ -7,6 +7,9 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
+;(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
 (setq package-enable-at-startup nil)
 (setq package-check-signature nil)
 (package-initialize)
@@ -19,9 +22,26 @@
 
 
 (add-hook 'clojure-mode-hook 'paredit-mode)
+
+;(require 'flycheck-clj-kondo)
+
+;(dolist (checker '(clj-kondo-clj clj-kondo-cljs clj-kondo-cljc clj-kondo-edn))
+ ; (setq flycheck-checkers (cons checker (delq checker flycheck-checkers))))
+
+;(dolist (checkers '((clj-kondo-clj . clojure-joker)
+  ;                  (clj-kondo-cljs . clojurescript-joker)
+    ;                (clj-kondo-cljc . clojure-joker)
+     ;               (clj-kondo-edn . edn-joker)))
+;  (flycheck-add-next-checker (car checkers) (cons 'error (cdr checkers))))
+
+
+
+
+
 ;; --- http://fgiasson.com/blog/index.php/2016/06/14/my-optimal-gnu-emacs-settings-for-developing-clojure-revised/ ---
 ;; Enter cider mode when entering the clojure major mode
-;(add-hook 'clojure-mode-hook 'cider-mode)
+					;(add-hook 'clojure-mode-hook 'cider-mode)
+(setq cider-save-file-on-load t)
 
 
 ;; Turn on auto-completion with Company-Mode
@@ -133,7 +153,13 @@
  '(find-name-arg "-iname")
  '(package-selected-packages
    (quote
-    (rainbow-mode rjsx-mode js2-mode helm helm-git-grep php-mode multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company))))
+    (flycheck-clj-kondo kibit-helper helm-grepint xclip rainbow-mode rjsx-mode js2-mode helm helm-git-grep php-mode multiple-cursors clj-refactor cider markdown-mode command-log-mode clojure-mode rainbow-delimiters paredit company)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-refresh-after-fn . "com.nextjournal.journal.repl/post-refresh")
+     (cider-refresh-before-fn . "com.nextjournal.journal.repl/pre-refresh")
+     (cider-ns-refresh-after-fn . "integrant.repl/resume")
+     (cider-ns-refresh-before-fn . "integrant.repl/suspend")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -150,6 +176,7 @@
 
 (require 'clj-refactor)
 (setq cljr-auto-clean-ns nil)
+(setq cljr-warn-on-eval nil)
 
 (defun my-clojure-mode-hook ()
     (clj-refactor-mode 1)
@@ -158,11 +185,19 @@
     (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+(setq cljr-warn-on-eval nil)
 
 ;; https://github.com/yasuyk/helm-git-grep
 (global-set-key (kbd "C-c g") 'helm-git-grep)
 
 (global-set-key (kbd "C-x f") 'find-name-dired)
+
+;; join line to next line
+(global-set-key (kbd "C-l")
+            (lambda ()
+                  (interactive)
+                  (join-line -1)))
+
 ;; reload buffers automatically
 (global-auto-revert-mode t)
 
