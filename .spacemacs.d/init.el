@@ -495,11 +495,18 @@ you should place your code here."
   ;; Reduce line number gutter witespace for small files
   (setq display-line-numbers-width-start t)
 
+  ;; no warning for cljr before eval
+  (setq cljr-warn-on-eval nil)
+
+  ;; allow to move beyond the end of line - it is crucial for structural navigation
+  (setq evil-move-beyond-eol t)
+
   ;; CTR-l key to join line to next line
   (global-set-key (kbd "C-l")
                   (lambda ()
                     (interactive)
                     (join-line -1)))
+
 
   ;; Enable syntax checking by default
 
