@@ -60,6 +60,7 @@ This function should only modify configuration layer settings."
      version-control
      yaml
      github
+     evil-cleverparens
      )
 
    ;; List of additional packages that will be installed without being
@@ -74,7 +75,8 @@ This function should only modify configuration layer settings."
                                       (cider :location (recipe :fetcher github
                                                                :repo "nextjournal/cider"
                                                                :files ("*.el" (:exclude ".dir-locals.el"))
-                                                               :branch "develop")))
+                                                               :branch "develop"))
+                                      helm-cider)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -493,9 +495,11 @@ you should place your code here."
   (setq magit-save-repository-buffers 'dontask)
 
   ;; Enable safe structural editing (evil-cleverparens)
-  ;;(spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
-  ;;(spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-clojure-mode)
+  (spacemacs/toggle-evil-cleverparens-on)
+  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
 
+  ;; allow to move beyond the end of line - it is crucial for structural navigation
+  (setq evil-move-beyond-eol t)
 
   ;; Reduce line number gutter witespace for small files
   (setq display-line-numbers-width-start t)
@@ -503,8 +507,6 @@ you should place your code here."
   ;; no warning for cljr before eval
   (setq cljr-warn-on-eval nil)
 
-  ;; allow to move beyond the end of line - it is crucial for structural navigation
-  (setq evil-move-beyond-eol t)
 
   ;; CTR-l key to join line to next line
   (global-set-key (kbd "C-l")
@@ -519,18 +521,11 @@ you should place your code here."
   (spacemacs/declare-prefix-for-mode 'clojure-mode "mc" "comments")
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cE" 'cider-pprint-eval-last-sexp-to-repl)
-
-  ;; additional keys for lisp state
-  ;; lisp state code https://github.com/syl20bnr/evil-lisp-state/blob/master/evil-lisp-state.el
-  (define-key evil-lisp-state-map "n" (evil-lisp-state-enter-command paredit-forward-up))
-  (define-key evil-lisp-state-map "f" (evil-lisp-state-enter-command sp-down-sexp))
-  (define-key evil-lisp-state-map ";" (evil-lisp-state-enter-command sp-comment))
-
-
-
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "dr" 'cider-inspect-last-result)
 
   ;; Enable aggressive indent mode for Clojure
   (add-hook 'clojure-mode-hook (lambda ()
+                                 (helm-cider-mode)
                                  (spacemacs/toggle-syntax-checking-on)
                                  (spacemacs/toggle-aggressive-indent-on)))
 
@@ -628,10 +623,13 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-cleverparens-swap-move-by-word-and-symbol t)
+ '(evil-cleverparens-use-regular-insert nil)
+ '(evil-move-beyond-eol t)
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(safe-local-variable-values
    (quote
     ((cider-ns-refresh-after-fn . "integrant.repl/resume")
