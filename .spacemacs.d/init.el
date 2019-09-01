@@ -514,6 +514,7 @@ you should place your code here."
                     (interactive)
                     (join-line -1)))
 
+  (spacemacs/set-leader-keys "ps" 'projectile-run-shell)
   ;; toggle neotree with "ot"
   (spacemacs/set-leader-keys "ot" 'neotree-toggle)
 
@@ -522,6 +523,11 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cE" 'cider-pprint-eval-last-sexp-to-repl)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "dr" 'cider-inspect-last-result)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "gm" 'helm-imenu)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "hc" (lambda ()
+                                                                 (interactive)
+                                                                 (cider-browse-ns (cider-current-ns))))
+
 
   ;; Enable aggressive indent mode for Clojure
   (add-hook 'clojure-mode-hook (lambda ()
@@ -554,8 +560,8 @@ you should place your code here."
     (define-clojure-indent
       (match 1)))
 
-  ;; Set cider repl buffers to insert initially
-  (evil-set-initial-state 'cider-repl-mode 'insert)
+  ;; Set cider repl buffers to normal initially
+  (evil-set-initial-state 'cider-repl-mode 'normal)
 
   ;; Save all files when switching from Emacs to another app
   (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
@@ -627,6 +633,16 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-cleverparens-use-regular-insert nil)
  '(evil-move-beyond-eol t)
  '(evil-want-Y-yank-to-eol nil)
+
+ ;; prevent helm-cider for overriding cider-browse-ns
+ '(helm-cider-overrides
+   (quote
+    ((cider-apropos . helm-cider-apropos)
+     (cider-apropos-select . helm-cider-apropos)
+     (cider-apropos-documentation . helm-cider-apropos-symbol-doc)
+     (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
+     (cider-browse-ns-all . helm-cider-apropos-ns)
+     (cider-browse-spec-all . helm-cider-spec))))
  '(package-selected-packages
    (quote
     (evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
