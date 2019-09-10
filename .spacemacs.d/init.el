@@ -50,6 +50,7 @@ This function should only modify configuration layer settings."
      git
      github
      osx
+     emoji
      markdown
      ;;multiple-cursors
      ;; (shell :variables
@@ -86,6 +87,7 @@ This function should only modify configuration layer settings."
                                     ;;magithub
                                     )
 
+   dotspacemacs-auto-save-file-location 'original
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -477,10 +479,10 @@ you should place your code here."
   ;; Set tab width for HTML/CSS/JS modes
   (setq default-indent 2)
   (setq web-mode-markup-indent-offset default-indent) ;; HTML in .html
-  (setq web-mode-css-indent-offset default-indent) ;; CSS in .html
-  (setq css-indent-offset default-indent) ;; CSS in .css
-  (setq web-mode-code-indent-offset default-indent) ;; JS in .html
-  (setq javascript-indent-level default-indent) ;; JS in .js
+  (setq web-mode-css-indent-offset default-indent)    ;; CSS in .html
+  (setq css-indent-offset default-indent)             ;; CSS in .css
+  (setq web-mode-code-indent-offset default-indent)   ;; JS in .html
+  (setq javascript-indent-level default-indent)       ;; JS in .js
 
   ;; Don't warn for missing semicolons in javascript files
   (setq js2-mode-show-strict-warnings nil)
@@ -508,16 +510,22 @@ you should place your code here."
   (setq cljr-warn-on-eval nil)
 
 
-  ;; CTR-l key to join line to next line
-  (global-set-key (kbd "C-l")
-                  (lambda ()
-                    (interactive)
-                    (join-line -1)))
+  ;; disable arrows when they are superfluous
+  (define-key evil-insert-state-map (kbd "<left>") 'evil-window-left)
+  (define-key evil-normal-state-map (kbd "<left>") 'evil-window-left)
+  (define-key evil-insert-state-map (kbd "<right>") 'evil-window-right)
+  (define-key evil-normal-state-map (kbd "<right>") 'evil-window-right)
+  (define-key evil-insert-state-map (kbd "<down>") 'evil-window-down)
+  (define-key evil-normal-state-map (kbd "<down>") 'evil-window-down)
+  (define-key evil-insert-state-map (kbd "<up>") 'evil-window-up)
+  (define-key evil-normal-state-map (kbd "<up>") 'evil-window-up)
 
   (spacemacs/set-leader-keys "ps" 'projectile-run-shell)
   ;; toggle neotree with "ot"
   (spacemacs/set-leader-keys "ot" 'neotree-toggle)
 
+  ;; org mode leader keys
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "A" 'org-show-all)
   ;; additional keys for clojure code evaluation
   (spacemacs/declare-prefix-for-mode 'clojure-mode "mc" "comments")
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
@@ -629,10 +637,13 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-save-timeout 1)
  '(cider-allow-jack-in-without-project (quote warn))
+ '(cider-edit-jack-in-command t)
  '(cider-print-options (quote (("length" 100))))
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
- '(evil-cleverparens-use-regular-insert nil t)
+ '(evil-cleverparens-use-regular-insert nil)
+ '(evil-cross-lines t)
  '(evil-move-beyond-eol t)
  '(evil-want-Y-yank-to-eol nil)
  '(helm-cider-overrides
@@ -643,9 +654,12 @@ This function is called at the very end of Spacemacs initialization."
      (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
      (cider-browse-ns-all . helm-cider-apropos-ns)
      (cider-browse-spec-all . helm-cider-spec))))
+ '(org-catch-invisible-edits (quote error))
+ '(org-image-actual-width 50)
+ '(org-todo-keywords (quote ((sequence "TODO" "INPROGRESS" "|" "DONE"))))
  '(package-selected-packages
    (quote
-    (magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
