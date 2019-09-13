@@ -33,6 +33,8 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     python
+     ruby
      ;; elixir
      javascript
      html
@@ -72,6 +74,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(flycheck-clj-kondo
                                       kibit-helper
+                                      helm-clojuredocs
                                       (cider :location (recipe :fetcher github
                                                                :repo "nextjournal/cider"
                                                                :files ("*.el" (:exclude ".dir-locals.el"))
@@ -499,6 +502,7 @@ you should place your code here."
   ;; Enable safe structural editing (evil-cleverparens)
   (spacemacs/toggle-evil-cleverparens-on)
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
+  (add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
 
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
@@ -520,12 +524,24 @@ you should place your code here."
   (define-key evil-insert-state-map (kbd "<up>") 'evil-window-up)
   (define-key evil-normal-state-map (kbd "<up>") 'evil-window-up)
 
+  ;; allow delete char backward in isert mode
+  (define-key evil-insert-state-map (kbd "C-d") 'evil-delete-backward-char)
+
   (spacemacs/set-leader-keys "ps" 'projectile-run-shell)
   ;; toggle neotree with "ot"
   (spacemacs/set-leader-keys "ot" 'neotree-toggle)
 
   ;; org mode leader keys
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "A" 'org-show-all)
+
+
+  ;; org mode key bindings to use special arrows with hjkl in normal mode
+  (with-eval-after-load 'org
+    (evil-define-key 'normal org-mode-map (kbd "H") 'org-shiftleft)
+    (evil-define-key 'normal org-mode-map (kbd "J") 'org-shiftdown)
+    (evil-define-key 'normal org-mode-map (kbd "K") 'org-shiftup)
+    (evil-define-key 'normal org-mode-map (kbd "L") 'org-shiftright)
+    )
   ;; additional keys for clojure code evaluation
   (spacemacs/declare-prefix-for-mode 'clojure-mode "mc" "comments")
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
@@ -591,10 +607,6 @@ you should place your code here."
      'clojure-tools-deps '("deps.edn")
      :test-suffix "_test"))
 
-  ;; enable paredit mode when clojure mode is active
-  (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-  (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-
   (when (file-exists-p "~/.spacemacs.d/nextjournal.el")
     (load "~/.spacemacs.d/nextjournal.el"))
 
@@ -639,7 +651,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(auto-save-timeout 1)
  '(cider-allow-jack-in-without-project (quote warn))
- '(cider-edit-jack-in-command t)
+ '(cider-edit-jack-in-command nil)
  '(cider-print-options (quote (("length" 100))))
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
  '(evil-cleverparens-use-regular-insert nil)
@@ -654,12 +666,14 @@ This function is called at the very end of Spacemacs initialization."
      (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
      (cider-browse-ns-all . helm-cider-apropos-ns)
      (cider-browse-spec-all . helm-cider-spec))))
+ '(org-agenda-files (quote ("~/Dropbox/Goals.org")))
  '(org-catch-invisible-edits (quote error))
  '(org-image-actual-width 50)
+ '(org-startup-truncated nil)
  '(org-todo-keywords (quote ((sequence "TODO" "INPROGRESS" "|" "DONE"))))
  '(package-selected-packages
    (quote
-    (emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
