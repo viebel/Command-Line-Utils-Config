@@ -550,6 +550,7 @@ you should place your code here."
     (evil-define-key 'normal org-mode-map (kbd "L") 'org-shiftright)
     )
 
+  ;; See https://github.com/LonoCloud/evil/blob/master/evil-integration.el for more tricks about evit integration
   ;; calendar mode bindings
   (with-eval-after-load 'calendar
     (defvar calendar-mode-map)
