@@ -1,7 +1,7 @@
 
 export EDITOR="vim"
 export VISUAL="vim"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/viebel/bin:/Users/viebel/.rvm/bin:`yarn global bin`:/Users/viebel/Library/Python/2.7/bin/"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/heroku/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/viebel/bin:/Users/viebel/.rvm/bin"
 export DYLD_FRAMEWORK_PATH=/Applications/WebKit.app/Contents/Frameworks/10.9/
 PATH=$PATH:/Applications/WebKit.app/Contents/Frameworks/10.9/JavaScriptCore.framework/Resources
 export JSC_HOME=/Applications/WebKit.app/Contents/Frameworks/10.9/JavaScriptCore.framework/Resources
