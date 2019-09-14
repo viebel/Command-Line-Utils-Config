@@ -33,12 +33,18 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     python
+     ;; python
      ruby
-     ;; elixir
      javascript
+     (org :variables
+          org-enable-org-journal-support t
+          org-journal-dir "~/Dropbox/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-journal-time-format "")
      html
-     org
      (clojure :variables clojure-enable-clj-refactor t)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -74,6 +80,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(flycheck-clj-kondo
                                       kibit-helper
+                                      org-journal
                                       helm-clojuredocs
                                       (cider :location (recipe :fetcher github
                                                                :repo "nextjournal/cider"
@@ -542,6 +549,17 @@ you should place your code here."
     (evil-define-key 'normal org-mode-map (kbd "K") 'org-shiftup)
     (evil-define-key 'normal org-mode-map (kbd "L") 'org-shiftright)
     )
+
+  ;; calendar mode bindings
+  (with-eval-after-load 'calendar
+    (defvar calendar-mode-map)
+    (evil-make-overriding-map calendar-mode-map)
+    (evil-define-key nil calendar-mode-map
+      "j" 'evil-next-line
+      "k" 'evil-previous-line
+      "J" 'org-journal-read-entry)
+    )
+
   ;; additional keys for clojure code evaluation
   (spacemacs/declare-prefix-for-mode 'clojure-mode "mc" "comments")
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
