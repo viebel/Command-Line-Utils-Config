@@ -92,7 +92,7 @@ This function should only modify configuration layer settings."
                                     ;;magithub
                                     )
 
-   dotspacemacs-auto-save-file-location 'original
+   dotspacemacs-auto-save-file-location 'cache
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -620,13 +620,6 @@ you should place your code here."
     (projectile-register-project-type
      'clojure-tools-deps '("deps.edn")
      :test-suffix "_test"))
-
-  (when (file-exists-p "~/.spacemacs.d/nextjournal.el")
-    (load "~/.spacemacs.d/nextjournal.el"))
-
-  (when (file-exists-p "~/.spacemacs.d/customizations.el")
-    (load "~/.spacemacs.d/customizations.el"))
-
 
   ;; Do not write anything past this comment. This is where Emacs will
   ;; auto-generate custom variable definitions.
