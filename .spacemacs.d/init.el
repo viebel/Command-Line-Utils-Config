@@ -623,6 +623,9 @@ you should place your code here."
      'clojure-tools-deps '("deps.edn")
      :test-suffix "_test"))
 
+  (when (file-exists-p "~/.spacemacs.d/nextjournal.el")
+    (load "~/.spacemacs.d/nextjournal.el"))
+
   ;; Do not write anything past this comment. This is where Emacs will
   ;; auto-generate custom variable definitions.
   (defun dotspacemacs/emacs-custom-settings ()
