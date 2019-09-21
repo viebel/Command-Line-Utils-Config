@@ -535,6 +535,27 @@ you should place your code here."
   ;; toggle neotree with "ot"
   (spacemacs/set-leader-keys "ot" 'neotree-toggle)
 
+  (with-eval-after-load 'ox
+    ;; export timestamp in a clean way. See https://endlessparentheses.com/better-time-stamps-in-org-export.html
+    (add-to-list 'org-export-filter-timestamp-functions
+                 #'endless/filter-timestamp)
+
+    (defun endless/filter-timestamp (trans back _comm)
+      "Remove <> around time-stamps."
+      (pcase back
+        ((or `jekyll `html)
+         (replace-regexp-in-string "&[lg]t;" "" trans))
+        (`latex
+         (replace-regexp-in-string "[<>]" "" trans))))
+
+  ;;; Activate custom format only during export. See https://emacs.stackexchange.com/a/34436
+    (setq org-time-stamp-custom-formats
+          '("<%d %b %Y>" . "<%d/%m/%y %a %H:%M>"))
+    (defun my-org-export-ensure-custom-times (backend)
+      (setq-local org-display-custom-times t))
+    (add-hook 'org-export-before-processing-hook 'my-org-export-ensure-custom-times))
+
+
   ;; org mode leader keys
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "A" 'org-show-all)
 
