@@ -702,7 +702,7 @@ This function is called at the very end of Spacemacs initialization."
      (cider-browse-spec-all . helm-cider-spec))))
  '(org-agenda-files
    (quote
-    ("~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/opinya.org" "~/Dropbox/TODOS/programmer.org")))
+    ("~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/opinya.org" "~/Dropbox/TODOS/programmer.org")))
  '(org-catch-invisible-edits (quote error))
  '(org-image-actual-width 50)
  '(org-journal-file-type (quote yearly))
