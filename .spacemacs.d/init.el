@@ -49,7 +49,12 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
+     ;; To have auto-completion on as soon as you start typing
+     ;; (auto-completion :variables auto-completion-idle-delay nil)
      ;; better-defaults
      emacs-lisp
      git
@@ -303,7 +308,7 @@ It should only modify the values of Spacemacs settings."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location nil
+   dotspacemacs-auto-save-file-location 'cache
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
@@ -528,6 +533,14 @@ you should place your code here."
   (define-key evil-insert-state-map (kbd "<up>") 'evil-window-up)
   (define-key evil-normal-state-map (kbd "<up>") 'evil-window-up)
 
+  ;; insert a single character in normal mode
+  ;; thank you https://emacs.stackexchange.com/a/33991
+  (defun my/insert-char (char count)
+    (interactive "c\np")
+    (insert-char char count))
+
+  (spacemacs/set-leader-keys (kbd "ii") 'my/insert-char)
+
   ;; allow delete char backward in isert mode
   (define-key evil-insert-state-map (kbd "C-d") 'evil-delete-backward-char)
 
@@ -604,9 +617,6 @@ you should place your code here."
   ;; Set to nil if stdout in repl impacts Emacs performance
   (setq cider-redirect-server-output-to-repl t)
 
-  ;; Don't prompt to save buffers when loading them (e.i running tests in a changed buffers)
-  (setq cider-save-file-on-load nil)
-
   ;; disable automatic adding of requires as this can have considerable perofrmance issues
   (setq cljr-magic-requires nil)
 
@@ -626,6 +636,10 @@ you should place your code here."
 
   ;; Save all files when switching from Emacs to another app
   (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
+
+  ;; auto save activated for all files
+  (add-hook 'text-mode-hook 'auto-save-visited-mode)
+  (add-hook 'prog-mode-hook 'auto-save-visited-mode)
 
   ;; Additional Clojure key bindings
   (dolist (m '(clojure-mode
@@ -683,9 +697,11 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-save-timeout 1)
+ '(auto-save-visited-interval 2)
  '(cider-allow-jack-in-without-project (quote warn))
  '(cider-edit-jack-in-command nil)
  '(cider-print-options (quote (("length" 100))))
+ '(cider-save-file-on-load t)
  '(diary-file "~/Dropbox/diary/diary.org")
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
  '(evil-cleverparens-use-regular-insert nil)
@@ -702,7 +718,8 @@ This function is called at the very end of Spacemacs initialization."
      (cider-browse-spec-all . helm-cider-spec))))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/opinya.org" "~/Dropbox/TODOS/programmer.org")))
+    ("~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/opinya.org" "~/Dropbox/TODOS/programmer.org")))
+ '(org-agenda-start-on-weekday 0)
  '(org-catch-invisible-edits (quote error))
  '(org-image-actual-width 50)
  '(org-journal-file-type (quote yearly))
@@ -710,7 +727,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-todo-keywords (quote ((sequence "TODO" "INPROGRESS" "|" "DONE"))))
  '(package-selected-packages
    (quote
-    (org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (company-quickhelp org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
