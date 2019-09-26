@@ -37,3 +37,7 @@ fi
 if [ -f /Users/viebel/google-cloud-sdk/completion.zsh.inc ]; then
     source '/Users/viebel/google-cloud-sdk/completion.zsh.inc'
 fi
+
+if [ -f /Users/viebel/.cycoenv ]; then
+    source /Users/viebel/.cycoenv
+fi
