@@ -33,6 +33,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     python
      ;; python
      ruby
      javascript
@@ -41,20 +42,20 @@ This function should only modify configuration layer settings."
           org-journal-dir "~/Dropbox/journal/")
      html
      (clojure :variables
-              clojure-enable-clj-refactor t
-              clojure-enable-fancify-symbols t)
+              clojure-enable-fancify-symbols nil)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
+     themes-megapack
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
      ;; To have auto-completion on as soon as you start typing
-     ;; (auto-completion :variables auto-completion-idle-delay nil)
+     ;; (auto-completion :variables [auto-completion-idle-delay]) nil
      ;; better-defaults
      emacs-lisp
      git
@@ -84,7 +85,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(flycheck-clj-kondo
                                       kibit-helper
                                       org-journal
+                                      emidje
                                       helm-clojuredocs
+                                      graphql-mode
                                       (cider :location (recipe :fetcher github
                                                                :repo "nextjournal/cider"
                                                                :files ("*.el" (:exclude ".dir-locals.el"))
@@ -106,8 +109,8 @@ This function should only modify configuration layer settings."
    ;; `used-only' installs only explicitly used packages and deletes any unused
    ;; packages as well as their unused dependencies. `used-but-keep-unused'
    ;; installs only the used packages but won't delete unused ones. `all'
-   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
-   ;; (default is `used-only')
+   ;; installs *all* packages supported by Spacemacs and never uninstalls (them.
+   ;; default is `used-only')
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
@@ -143,11 +146,11 @@ It should only modify the values of Spacemacs settings."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
 
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
-   dotspacemacs-elpa-timeout 5
+   dotspacemacs-elpa-timeout 20
 
    ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
    ;; This is an advanced option and should not be changed unless you suspect
@@ -599,6 +602,7 @@ you should place your code here."
   ;; additional keys for clojure code evaluation
   (spacemacs/declare-prefix-for-mode 'clojure-mode "mc" "comments")
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cf" 'cider-pprint-eval-defun-to-comment)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "ce" 'cider-pprint-eval-last-sexp-to-comment)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "cE" 'cider-pprint-eval-last-sexp-to-repl)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "dr" 'cider-inspect-last-result)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "gm" 'helm-imenu)
@@ -611,7 +615,8 @@ you should place your code here."
   (add-hook 'clojure-mode-hook (lambda ()
                                  (helm-cider-mode)
                                  (spacemacs/toggle-syntax-checking-on)
-                                 (spacemacs/toggle-aggressive-indent-on)))
+                                ; (spacemacs/toggle-aggressive-indent-on)
+                                 ))
 
   (use-package clojure-mode
     :ensure t
@@ -728,22 +733,30 @@ This function is called at the very end of Spacemacs initialization."
      (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
      (cider-browse-ns-all . helm-cider-apropos-ns)
      (cider-browse-spec-all . helm-cider-spec))))
+ '(helm-completion-style (quote emacs))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/TODOS/kids.org" "~/Dropbox/TODOS/scale my business.org" "~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/programmer.org")))
+    ("~/Dropbox/TODOS/company.org" "~/Dropbox/TODOS/kids.org" "~/Dropbox/TODOS/scale my business.org" "~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/programmer.org")))
+ '(org-agenda-include-diary t)
  '(org-agenda-start-on-weekday 0)
  '(org-catch-invisible-edits (quote error))
- '(org-image-actual-width 50)
+ '(org-image-actual-width (quote (500)))
  '(org-journal-file-type (quote yearly))
  '(org-startup-truncated nil)
  '(org-todo-keywords (quote ((sequence "TODO" "INPROGRESS" "|" "DONE"))))
  '(package-selected-packages
    (quote
-    (flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary company-quickhelp org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme emidje graphql-mode evil goto-chg powerline hydra lv bind-key avy eval-sexp-fu company paredit smartparens highlight undo-tree flycheck git-gutter cider sesman parseedn clojure-mode flx request helm helm-core dash-functional yasnippet multiple-cursors skewer-mode js2-mode simple-httpd git-commit with-editor async markdown-mode projectile org-plus-contrib f dash terminal-focus-reporting flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary company-quickhelp org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(projectile-globally-ignored-directories
+   (quote
+    (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".clj-kondo")))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
-    ((cider-ns-refresh-after-fn . "integrant.repl/resume")
+    ((cider-shadow-cljs-default-options . "app")
+     (cider-preferred-build-tool . "lein")
+     (org-image-actual-width)
+     (cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend")
      (elixir-enable-compilation-checking . t)
      (elixir-enable-compilation-checking))))
@@ -753,4 +766,4 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))

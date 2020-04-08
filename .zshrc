@@ -59,3 +59,9 @@ fi
 #very important for gpg (and for lein deploy) - http://unix.stackexchange.com/questions/217737/pinentry-fails-with-gpg-agent-and-ssh
 export GPG_TTY=`tty`
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/viebel/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/viebel/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/viebel/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/viebel/google-cloud-sdk/completion.zsh.inc'; fi
