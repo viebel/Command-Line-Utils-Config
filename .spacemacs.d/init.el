@@ -512,6 +512,16 @@ you should place your code here."
   ;; auto save files when invoking magit status without asking
   (setq magit-save-repository-buffers 'dontask)
 
+  ;; better magit colors for emacs in terminal
+  (custom-set-faces
+   '(magit-diff-added ((((type tty)) (:foreground "green"))))
+   '(magit-diff-added-highlight ((((type tty)) (:foreground "LimeGreen"))))
+   '(magit-diff-context-highlight ((((type tty)) (:foreground "default"))))
+   '(magit-diff-file-heading ((((type tty)) nil)))
+   '(magit-diff-removed ((((type tty)) (:foreground "red"))))
+   '(magit-diff-removed-highlight ((((type tty)) (:foreground "IndianRed"))))
+   '(magit-section-highlight ((((type tty)) nil))))
+
   ;; Enable safe structural editing (evil-cleverparens)
   (spacemacs/toggle-evil-cleverparens-on)
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
