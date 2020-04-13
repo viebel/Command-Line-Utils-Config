@@ -500,8 +500,9 @@ you should place your code here."
   (setq web-mode-code-indent-offset default-indent)   ;; JS in .html
   (setq javascript-indent-level default-indent)       ;; JS in .js
 
+  ;; disable mouse interaction
   (xterm-mouse-mode 0)
-
+  (spacemacs/toggle-highlight-current-line-globally-off)
   ;; Don't warn for missing semicolons in javascript files
   (setq js2-mode-show-strict-warnings nil)
 
