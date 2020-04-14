@@ -2,8 +2,8 @@
 repository_folder=`pwd`
 echo $repository_folder
 cd $HOME
-rm .screenrc .inputrc .bashrc .vimrc .vim .zshrc bin
 for x in .spacemacs.d .tmux.conf .zshrc .zshenv .inputrc .gitignore_global bin; do 
+   rm -rf $x
    y="ln -f -s $repository_folder/$x $x"
    echo $y
    `$y`
