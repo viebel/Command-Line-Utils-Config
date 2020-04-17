@@ -907,6 +907,7 @@ static char *gnus-pointer[] = {
  '(magit-diff-file-heading ((((type tty)) nil)))
  '(magit-diff-removed ((((type tty)) (:foreground "red"))))
  '(magit-diff-removed-highlight ((((type tty)) (:foreground "IndianRed"))))
+ '(magit-hash ((t (:foreground "green"))))
  '(magit-section-highlight ((((type tty)) nil)))
  '(term-color-black ((t (:foreground "#3F3F3F" :background "#2B2B2B"))))
  '(term-color-blue ((t (:foreground "#7CB8BB" :background "#4C7073"))))
