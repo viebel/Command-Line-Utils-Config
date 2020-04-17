@@ -683,9 +683,10 @@ you should place your code here."
       "ff" 'cider-format-defun
       "fr" 'cider-format-region))
 
-  (with-eval-after-load 'evil
-    (define-key evil-emacs-state-map (kbd "C-z") nil)
-    (define-key evil-normal-state-map (kbd "C-z") nil))
+  ;;when running the following code to disable c-z bindings it causes lots of troubles
+  ;; (with-eval-after-load 'evil
+   ;; (define-key evil-emacs-state-map (kbd "C-z") nil)
+   ;; (define-key evil-normal-state-map (kbd "C-z") nil))
 
   (with-eval-after-load 'projectile
     (projectile-register-project-type
