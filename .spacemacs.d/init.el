@@ -737,6 +737,8 @@ This function is called at the very end of Spacemacs initialization."
  '(cider-edit-jack-in-command nil)
  '(cider-print-options (quote (("length" 100))))
  '(cider-save-file-on-load t)
+ '(cljr-auto-clean-ns nil)
+ '(cljr-auto-sort-ns nil)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#7ec98f")
  '(cua-normal-cursor-color "#7b7b7b")
