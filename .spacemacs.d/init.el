@@ -655,6 +655,15 @@ you should place your code here."
                                 ; (spacemacs/toggle-aggressive-indent-on)
                                  ))
 
+  (eval-after-load 'cider
+    #'emidje-setup)
+
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tma" 'emidje-run-all-tests)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmb" 'emidje-show-test-report)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmn" 'emidje-run-ns-tests)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmr" 'emidje-re-run-non-passing-tests)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmi" 'emidje-format-tabular)
+
   (use-package clojure-mode
     :ensure t
     :config
