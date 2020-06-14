@@ -662,6 +662,7 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmb" 'emidje-show-test-report)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmn" 'emidje-run-ns-tests)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmr" 'emidje-re-run-non-passing-tests)
+  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmt" 'emidje-run-test-at-point)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmi" 'emidje-format-tabular)
 
   (use-package clojure-mode
@@ -785,6 +786,8 @@ This function is called at the very end of Spacemacs initialization."
  '(diary-file "~/Dropbox/diary/diary.org")
  '(doom-modeline-buffer-encoding nil)
  '(doom-modeline-enable-word-count t)
+ '(emidje-always-show-test-report t)
+ '(emidje-show-full-test-summary t)
  '(emms-mode-line-icon-image-cache
    (quote
     (image :type xpm :ascent center :data "/* XPM */
@@ -807,7 +810,7 @@ static char *note[] = {
 \"######....\",
 \"#######..#\" };")))
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
- '(evil-cleverparens-use-regular-insert nil t)
+ '(evil-cleverparens-use-regular-insert nil)
  '(evil-cross-lines t)
  '(evil-move-beyond-eol t)
  '(evil-want-Y-yank-to-eol nil)
