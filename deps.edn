@@ -35,9 +35,11 @@
  ;;   :test {:extra-paths ["test"]}
  ;; }
  :aliases {:nrepl {:extra-deps
-                   {nrepl/nrepl {:mvn/version "0.6.0"}
+                   {nrepl/nrepl {:mvn/version "0.7.0"}
                     cider/piggieback {:mvn/version "0.4.2"}
                     org.clojure/tools.deps.alpha {:mvn/version "0.5.442"}}}
+           :nrepl-alpha {:extra-deps
+                         {nrepl/nrepl {:mvn/version "0.8.0-SNAPSHOT"}}}
            :reader {:override-deps {org.clojure/clojurescript {:mvn/version "1.10.339"}
                                     org.clojure/tools.reader {:mvn/version "1.0.0-beta3"}}}
            :deps {:extra-deps {viebel/gadjett {:mvn/version "0.5.2"}
