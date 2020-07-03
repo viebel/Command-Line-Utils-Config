@@ -873,6 +873,7 @@ static char *gnus-pointer[] = {
  '(hl-fg-colors
    (quote
     ("#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000")))
+ '(ispell-silently-savep t)
  '(linum-format " %7i ")
  '(lsp-ui-doc-border "#8b8b8b")
  '(nrepl-message-colors
