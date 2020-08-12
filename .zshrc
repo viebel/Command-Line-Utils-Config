@@ -63,8 +63,3 @@ export GPG_TTY=`tty`
 # use python from brew
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/viebel/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/viebel/bin/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/viebel/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/viebel/bin/google-cloud-sdk/completion.zsh.inc'; fi
