@@ -86,7 +86,6 @@ This function should only modify configuration layer settings."
                                       kibit-helper
                                       org-journal
                                       walkclj
-                                      emidje
                                       helm-clojuredocs
                                       graphql-mode
                                       evil-string-inflection
@@ -659,8 +658,8 @@ you should place your code here."
                                 ; (spacemacs/toggle-aggressive-indent-on)
                                  ))
 
-  (eval-after-load 'cider
-    #'emidje-setup)
+  ;;(eval-after-load 'cider
+   ;; #'emidje-setup)
 
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tma" 'emidje-run-all-tests)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmb" 'emidje-show-test-report)
