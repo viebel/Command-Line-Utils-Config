@@ -63,3 +63,7 @@ export GPG_TTY=`tty`
 # use python from brew
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
+
+# added by travis gem
+[ ! -s /Users/viebel/.travis/travis.sh ] || source /Users/viebel/.travis/travis.sh
+export PATH="/usr/local/opt/python@3.7/bin:$PATH"
