@@ -237,7 +237,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Fira Code"
-                               :size 16
+                               :size 24
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -525,7 +525,6 @@ you should place your code here."
    '(magit-section-highlight ((((type tty)) nil))))
 
   ;; Enable safe structural editing (evil-cleverparens)
-  (spacemacs/toggle-evil-cleverparens-on)
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
   (add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
 
@@ -673,6 +672,17 @@ you should place your code here."
     :config
     (require 'flycheck-clj-kondo))
 
+  ;; See https://github.com/luxbock/evil-cleverparens/issues/58#issuecomment-717419683
+  (use-package evil-cleverparens
+    :init
+    (setq evil-cleverparens-use-additional-bindings nil)
+    :config
+    (setq evil-cleverparens-use-additional-bindings t)
+    (unless window-system
+      (setq evil-cp-additional-bindings (assoc-delete-all "M-[" evil-cp-additional-bindings))
+      (setq evil-cp-additional-bindings (assoc-delete-all "M-]" evil-cp-additional-bindings)))
+    (evil-cp-set-additional-bindings))
+
   ;; Set to nil if stdout in repl impacts Emacs performance
   (setq cider-redirect-server-output-to-repl t)
 
@@ -745,7 +755,6 @@ This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
     (custom-set-variables
-     fs ;; custom-set-variables was added by Custom.
      ;; If you edit it by hand, you could mess it up, so be careful.
      ;; Your init file should contain only one such instance.
      ;; If there is more than one, they won't work right.
@@ -774,28 +783,27 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(auto-save-timeout 1)
  '(auto-save-visited-interval 2)
- '(cider-allow-jack-in-without-project (quote warn))
+ '(cider-allow-jack-in-without-project 'warn)
  '(cider-edit-jack-in-command nil)
  '(cider-ns-refresh-after-fn "user/start")
  '(cider-ns-refresh-before-fn "user/stop")
- '(cider-print-options (quote (("length" 100))))
+ '(cider-print-options '(("length" 100)))
  '(cider-save-file-on-load t)
  '(cljr-auto-clean-ns nil)
  '(cljr-auto-sort-ns nil)
- '(compilation-message-face (quote default))
+ '(compilation-message-face 'default)
  '(cua-global-mark-cursor-color "#7ec98f")
  '(cua-normal-cursor-color "#7b7b7b")
  '(cua-overwrite-cursor-color "#e5c06d")
  '(cua-read-only-cursor-color "#8ac6f2")
- '(diary-entry-marker (quote font-lock-variable-name-face))
+ '(diary-entry-marker 'font-lock-variable-name-face)
  '(diary-file "~/Dropbox/diary/diary.org")
  '(doom-modeline-buffer-encoding nil)
  '(doom-modeline-enable-word-count t)
  '(emidje-always-show-test-report t)
  '(emidje-show-full-test-summary t)
  '(emms-mode-line-icon-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
+   '(image :type xpm :ascent center :data "/* XPM */
 static char *note[] = {
 /* width height num_colors chars_per_pixel */
 \"    10   11        2            1\",
@@ -813,17 +821,16 @@ static char *note[] = {
 \"#..######.\",
 \"#######...\",
 \"######....\",
-\"#######..#\" };")))
+\"#######..#\" };"))
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
  '(evil-cleverparens-use-regular-insert nil)
  '(evil-cross-lines t)
  '(evil-move-beyond-eol t)
  '(evil-want-Y-yank-to-eol nil)
  '(fringe-mode 6 nil (fringe))
- '(gnus-logo-colors (quote ("#528d8d" "#c0c0c0")) t)
+ '(gnus-logo-colors '("#528d8d" "#c0c0c0") t)
  '(gnus-mode-line-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
+   '(image :type xpm :ascent center :data "/* XPM */
 static char *gnus-pointer[] = {
 /* width height num_colors chars_per_pixel */
 \"    18    13        2            1\",
@@ -843,76 +850,65 @@ static char *gnus-pointer[] = {
 \"######..###.######\",
 \"###....####.######\",
 \"###..######.######\",
-\"###########.######\" };")) t)
+\"###########.######\" };") t)
  '(helm-buffer-max-length 100)
  '(helm-cider-overrides
-   (quote
-    ((cider-apropos . helm-cider-apropos)
+   '((cider-apropos . helm-cider-apropos)
      (cider-apropos-select . helm-cider-apropos)
      (cider-apropos-documentation . helm-cider-apropos-symbol-doc)
      (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
      (cider-browse-ns-all . helm-cider-apropos-ns)
-     (cider-browse-spec-all . helm-cider-spec))))
- '(helm-completion-style (quote emacs))
+     (cider-browse-spec-all . helm-cider-spec)))
+ '(helm-completion-style 'emacs)
  '(helm-grep-ignored-directories
-   (quote
-    ("SCCS/" "RCS/" "CVS/" "MCVS/" ".svn/" ".git/" ".hg/" ".bzr/" "_MTN/" "_darcs/" "{arch}/" ".gvfs/" "dist/")))
- '(highlight-changes-colors (quote ("#e5786d" "#834c98")))
+   '("SCCS/" "RCS/" "CVS/" "MCVS/" ".svn/" ".git/" ".hg/" ".bzr/" "_MTN/" "_darcs/" "{arch}/" ".gvfs/" "dist/"))
+ '(highlight-changes-colors '("#e5786d" "#834c98"))
  '(highlight-symbol-colors
-   (quote
-    ("#37d8363d134e" "#191c36983654" "#37d8363d134e" "#37e2157b36a3" "#191c36983654" "#37d8363d134e" "#191c36983654")))
+   '("#37d8363d134e" "#191c36983654" "#37d8363d134e" "#37e2157b36a3" "#191c36983654" "#37d8363d134e" "#191c36983654"))
  '(highlight-symbol-foreground-color "#8b8b8b")
  '(highlight-tail-colors
-   (quote
-    (("#0a0a0a" . 0)
+   '(("#0a0a0a" . 0)
      ("#162c2c" . 20)
      ("#162c2c" . 30)
      ("#162c2c" . 50)
      ("#2d2c11" . 60)
      ("#2d2c11" . 70)
      ("#2d2c11" . 85)
-     ("#0a0a0a" . 100))))
+     ("#0a0a0a" . 100)))
  '(hl-bg-colors
-   (quote
-    ("#2d2c11" "#2d2c11" "#2d2c11" "#2d2c11" "#2d132c" "#162c2c" "#162c2c" "#162c2c")))
+   '("#2d2c11" "#2d2c11" "#2d2c11" "#2d2c11" "#2d132c" "#162c2c" "#162c2c" "#162c2c"))
  '(hl-fg-colors
-   (quote
-    ("#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000")))
+   '("#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000"))
  '(ispell-silently-savep t)
  '(linum-format " %7i ")
  '(lsp-ui-doc-border "#8b8b8b")
  '(nrepl-message-colors
-   (quote
-    ("#ffb4ac" "#ddaa6f" "#e5c06d" "#162c2c" "#dffaf9" "#162c2c" "#7ec98f" "#e5786d" "#834c98")))
+   '("#ffb4ac" "#ddaa6f" "#e5c06d" "#162c2c" "#dffaf9" "#162c2c" "#7ec98f" "#e5786d" "#834c98"))
  '(org-agenda-files
-   (quote
-    ("~/Dropbox/TODOS/company.org" "~/Dropbox/TODOS/kids.org" "~/Dropbox/TODOS/scale my business.org" "~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/programmer.org")))
+   '("~/Dropbox/TODOS/company.org" "~/Dropbox/TODOS/kids.org" "~/Dropbox/TODOS/scale my business.org" "~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/programmer.org"))
  '(org-agenda-include-diary t)
  '(org-agenda-start-on-weekday 0)
- '(org-catch-invisible-edits (quote error))
- '(org-image-actual-width (quote (500)))
- '(org-journal-file-type (quote yearly))
+ '(org-catch-invisible-edits 'error)
+ '(org-image-actual-width '(500) t)
+ '(org-journal-file-type 'yearly)
  '(org-startup-truncated nil)
- '(org-todo-keywords (quote ((sequence "TODO" "INPROGRESS" "|" "DONE"))))
+ '(org-todo-keywords '((sequence "TODO" "INPROGRESS" "|" "DONE")))
  '(package-selected-packages
-   (quote
-    (sql-indent plantuml-mode string-inflection evil-string-inflection anzu iedit popup adoc-mode markup-faces walkclj treepy all-the-icons doom-modeline discover-clj-refactor zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme emidje graphql-mode evil goto-chg powerline hydra lv bind-key avy eval-sexp-fu company paredit smartparens highlight undo-tree flycheck git-gutter cider sesman parseedn clojure-mode flx request helm helm-core dash-functional yasnippet multiple-cursors skewer-mode js2-mode simple-httpd git-commit with-editor async markdown-mode projectile org-plus-contrib f dash terminal-focus-reporting flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary company-quickhelp org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(plantuml-default-exec-mode (quote jar))
+   '(define-word tern json-snatcher json-reformat parent-mode edn peg haml-mode fringe-helper git-gutter+ s web-completion-data inflections spinner queue pkg-info parseclj a epl bind-map packed auto-complete sql-indent plantuml-mode string-inflection evil-string-inflection anzu iedit popup adoc-mode markup-faces walkclj treepy all-the-icons doom-modeline discover-clj-refactor zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme emidje graphql-mode evil goto-chg powerline hydra lv bind-key avy eval-sexp-fu company paredit smartparens highlight undo-tree flycheck git-gutter cider sesman parseedn clojure-mode flx request helm helm-core dash-functional yasnippet multiple-cursors skewer-mode js2-mode simple-httpd git-commit with-editor async markdown-mode projectile org-plus-contrib f dash terminal-focus-reporting flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary company-quickhelp org-journal org-category-capture alert log4e gntp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic lispyville lispy zoutline counsel swiper ivy rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby helm-clojuredocs ox-reveal emoji-cheat-sheet-plus company-emoji magit-gh-pulls gh marshal logito pcache ht magit-popup gitignore-mode transient yasnippet-snippets evil-cleverparens helm-cider kibit-helper flycheck-pos-tip pos-tip flycheck-clj-kondo yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump diminish diff-hl company-web company-statistics column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))
+ '(plantuml-default-exec-mode 'jar)
  '(plantuml-indent-level 2)
  '(pos-tip-background-color "#0a0a0a")
  '(pos-tip-foreground-color "#8b8b8b")
  '(projectile-globally-ignored-directories
-   (quote
-    (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".clj-kondo")))
+   '(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".clj-kondo"))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
-   (quote
-    ((cider-shadow-cljs-default-options . "app")
+   '((cider-shadow-cljs-default-options . "app")
      (cider-preferred-build-tool . "lein")
      (org-image-actual-width)
      (cider-ns-refresh-after-fn . "user/start")
-     (cider-ns-refresh-before-fn . "user/stop"))))
- '(search-default-mode (quote char-fold-to-regexp))
+     (cider-ns-refresh-before-fn . "user/stop")))
+ '(search-default-mode 'char-fold-to-regexp)
  '(search-highlight t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#8ac6f2" "#0a0a0a" 0.2))
  '(term-default-bg-color "#000000")
@@ -920,8 +916,7 @@ static char *gnus-pointer[] = {
  '(vc-annotate-background "#1f2124")
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
-   (quote
-    ((20 . "#ff0000")
+   '((20 . "#ff0000")
      (40 . "#ff4a52")
      (60 . "#f6aa11")
      (80 . "#f1e94b")
@@ -938,11 +933,10 @@ static char *gnus-pointer[] = {
      (300 . "#8996a8")
      (320 . "#afc4db")
      (340 . "#cfe2f2")
-     (360 . "#dc8cc3"))))
+     (360 . "#dc8cc3")))
  '(vc-annotate-very-old-color "#dc8cc3")
  '(weechat-color-list
-   (quote
-    (unspecified "#000000" "#0a0a0a" "#2d2c11" "#ffb4ac" "#162c2c" "#8ac6f2" "#2d2c11" "#e5c06d" "#162c2c" "#a4b5e6" "#2d2c11" "#e5786d" "#162c2c" "#7ec98f" "#7b7b7b" "#5e5e5e")))
+   '(unspecified "#000000" "#0a0a0a" "#2d2c11" "#ffb4ac" "#162c2c" "#8ac6f2" "#2d2c11" "#e5c06d" "#162c2c" "#a4b5e6" "#2d2c11" "#e5786d" "#162c2c" "#7ec98f" "#7b7b7b" "#5e5e5e"))
  '(xterm-color-names
    ["#0a0a0a" "#ffb4ac" "#8ac6f2" "#e5c06d" "#a4b5e6" "#e5786d" "#7ec98f" "#ededed"])
  '(xterm-color-names-bright
@@ -974,3 +968,201 @@ static char *gnus-pointer[] = {
  '(term-color-yellow ((t (:foreground "#DFAF8F" :background "#9FC59F"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white)))))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-timeout 1)
+ '(auto-save-visited-interval 2)
+ '(cider-allow-jack-in-without-project 'warn)
+ '(cider-edit-jack-in-command nil)
+ '(cider-ns-refresh-after-fn "user/start")
+ '(cider-ns-refresh-before-fn "user/stop")
+ '(cider-print-options '(("length" 100)))
+ '(cider-save-file-on-load t)
+ '(cljr-auto-clean-ns nil)
+ '(cljr-auto-sort-ns nil)
+ '(compilation-message-face 'default)
+ '(cua-global-mark-cursor-color "#7ec98f")
+ '(cua-normal-cursor-color "#7b7b7b")
+ '(cua-overwrite-cursor-color "#e5c06d")
+ '(cua-read-only-cursor-color "#8ac6f2")
+ '(diary-entry-marker 'font-lock-variable-name-face)
+ '(diary-file "~/Dropbox/diary/diary.org")
+ '(doom-modeline-buffer-encoding nil)
+ '(doom-modeline-enable-word-count t)
+ '(emidje-always-show-test-report t)
+ '(emidje-show-full-test-summary t)
+ '(emms-mode-line-icon-image-cache
+   '(image :type xpm :ascent center :data "/* XPM */
+static char *note[] = {
+/* width height num_colors chars_per_pixel */
+\"    10   11        2            1\",
+/* colors */
+\". c #1fb3b3\",
+\"# c None s None\",
+/* pixels */
+\"###...####\",
+\"###.#...##\",
+\"###.###...\",
+\"###.#####.\",
+\"###.#####.\",
+\"#...#####.\",
+\"....#####.\",
+\"#..######.\",
+\"#######...\",
+\"######....\",
+\"#######..#\" };"))
+ '(evil-cleverparens-swap-move-by-word-and-symbol t)
+ '(evil-cleverparens-use-regular-insert nil)
+ '(evil-cross-lines t)
+ '(evil-move-beyond-eol t)
+ '(evil-want-Y-yank-to-eol nil)
+ '(fringe-mode 6 nil (fringe))
+ '(gnus-logo-colors '("#528d8d" "#c0c0c0") t)
+ '(gnus-mode-line-image-cache
+   '(image :type xpm :ascent center :data "/* XPM */
+static char *gnus-pointer[] = {
+/* width height num_colors chars_per_pixel */
+\"    18    13        2            1\",
+/* colors */
+\". c #1fb3b3\",
+\"# c None s None\",
+/* pixels */
+\"##################\",
+\"######..##..######\",
+\"#####........#####\",
+\"#.##.##..##...####\",
+\"#...####.###...##.\",
+\"#..###.######.....\",
+\"#####.########...#\",
+\"###########.######\",
+\"####.###.#..######\",
+\"######..###.######\",
+\"###....####.######\",
+\"###..######.######\",
+\"###########.######\" };") t)
+ '(helm-buffer-max-length 100)
+ '(helm-cider-overrides
+   '((cider-apropos . helm-cider-apropos)
+     (cider-apropos-select . helm-cider-apropos)
+     (cider-apropos-documentation . helm-cider-apropos-symbol-doc)
+     (cider-apropos-documentation-select . helm-cider-apropos-symbol-doc)
+     (cider-browse-ns-all . helm-cider-apropos-ns)
+     (cider-browse-spec-all . helm-cider-spec)))
+ '(helm-completion-style 'emacs)
+ '(helm-grep-ignored-directories
+   '("SCCS/" "RCS/" "CVS/" "MCVS/" ".svn/" ".git/" ".hg/" ".bzr/" "_MTN/" "_darcs/" "{arch}/" ".gvfs/" "dist/"))
+ '(highlight-changes-colors '("#e5786d" "#834c98"))
+ '(highlight-symbol-colors
+   '("#37d8363d134e" "#191c36983654" "#37d8363d134e" "#37e2157b36a3" "#191c36983654" "#37d8363d134e" "#191c36983654"))
+ '(highlight-symbol-foreground-color "#8b8b8b")
+ '(highlight-tail-colors
+   '(("#0a0a0a" . 0)
+     ("#162c2c" . 20)
+     ("#162c2c" . 30)
+     ("#162c2c" . 50)
+     ("#2d2c11" . 60)
+     ("#2d2c11" . 70)
+     ("#2d2c11" . 85)
+     ("#0a0a0a" . 100)))
+ '(hl-bg-colors
+   '("#2d2c11" "#2d2c11" "#2d2c11" "#2d2c11" "#2d132c" "#162c2c" "#162c2c" "#162c2c"))
+ '(hl-fg-colors
+   '("#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000" "#000000"))
+ '(ispell-silently-savep t)
+ '(linum-format " %7i ")
+ '(lsp-ui-doc-border "#8b8b8b")
+ '(nrepl-message-colors
+   '("#ffb4ac" "#ddaa6f" "#e5c06d" "#162c2c" "#dffaf9" "#162c2c" "#7ec98f" "#e5786d" "#834c98"))
+ '(org-agenda-files
+   '("~/Dropbox/TODOS/company.org" "~/Dropbox/TODOS/kids.org" "~/Dropbox/TODOS/scale my business.org" "~/Dropbox/TODOS/Focusing.org" "~/Dropbox/TODOS/Consulting hours.org" "~/Dropbox/TODOS/TODOS.org" "~/Dropbox/journal/20190101" "~/Dropbox/diary/diary.org" "~/Dropbox/TODOS/coaching.org" "~/prj/cyco/mr-hankey-2/TODOS.org" "~/Dropbox/TODOS/makolet.org" "~/Dropbox/TODOS/goals.org" "~/Dropbox/TODOS/programmer.org"))
+ '(org-agenda-include-diary t)
+ '(org-agenda-start-on-weekday 0)
+ '(org-catch-invisible-edits 'error)
+ '(org-image-actual-width '(500) t)
+ '(org-journal-file-type 'yearly)
+ '(org-startup-truncated nil)
+ '(org-todo-keywords '((sequence "TODO" "INPROGRESS" "|" "DONE")))
+ '(package-selected-packages
+   '(cider yasnippet-snippets yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode sesman scss-mode sass-mode reveal-in-osx-finder restart-emacs rainbow-delimiters queue pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer osx-trash osx-dictionary org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-elixir neotree nameless move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode link-hint launchctl json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ flycheck-mix flycheck-credo flycheck-clj-kondo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav editorconfig dumb-jump dracula-theme dotenv-mode diminish diff-hl counsel-projectile company-web company-statistics column-enforce-mode clojure-snippets clojure-cheatsheet clj-refactor clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile alchemist aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))
+ '(plantuml-default-exec-mode 'jar)
+ '(plantuml-indent-level 2)
+ '(pos-tip-background-color "#0a0a0a")
+ '(pos-tip-foreground-color "#8b8b8b")
+ '(projectile-globally-ignored-directories
+   '(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".clj-kondo"))
+ '(projectile-use-git-grep t)
+ '(safe-local-variable-values
+   '((cider-refresh-after-fn . "com.nextjournal.journal.repl/post-refresh")
+     (cider-refresh-before-fn . "com.nextjournal.journal.repl/pre-refresh")
+     (javascript-backend . lsp)
+     (elixir-enable-compilation-checking . t)
+     (elixir-enable-compilation-checking)))
+ '(search-default-mode 'char-fold-to-regexp)
+ '(search-highlight t)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#8ac6f2" "#0a0a0a" 0.2))
+ '(term-default-bg-color "#000000")
+ '(term-default-fg-color "#7b7b7b")
+ '(vc-annotate-background "#1f2124")
+ '(vc-annotate-background-mode nil)
+ '(vc-annotate-color-map
+   '((20 . "#ff0000")
+     (40 . "#ff4a52")
+     (60 . "#f6aa11")
+     (80 . "#f1e94b")
+     (100 . "#f5f080")
+     (120 . "#f6f080")
+     (140 . "#41a83e")
+     (160 . "#40b83e")
+     (180 . "#b6d877")
+     (200 . "#b7d877")
+     (220 . "#b8d977")
+     (240 . "#b9d977")
+     (260 . "#93e0e3")
+     (280 . "#72aaca")
+     (300 . "#8996a8")
+     (320 . "#afc4db")
+     (340 . "#cfe2f2")
+     (360 . "#dc8cc3")))
+ '(vc-annotate-very-old-color "#dc8cc3")
+ '(weechat-color-list
+   '(unspecified "#000000" "#0a0a0a" "#2d2c11" "#ffb4ac" "#162c2c" "#8ac6f2" "#2d2c11" "#e5c06d" "#162c2c" "#a4b5e6" "#2d2c11" "#e5786d" "#162c2c" "#7ec98f" "#7b7b7b" "#5e5e5e"))
+ '(xterm-color-names
+   ["#0a0a0a" "#ffb4ac" "#8ac6f2" "#e5c06d" "#a4b5e6" "#e5786d" "#7ec98f" "#ededed"])
+ '(xterm-color-names-bright
+   ["#000000" "#ddaa6f" "#525252" "#5e5e5e" "#7b7b7b" "#834c98" "#8b8b8b" "#fffeff"]))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(company-preview ((t (:background "blue4" :foreground "white"))))
+ '(company-scrollbar-bg ((t (:background "magenta"))))
+ '(company-tooltip ((t (:foreground "cyan"))))
+ '(magit-diff-added ((((type tty)) (:foreground "green"))))
+ '(magit-diff-added-highlight ((((type tty)) (:foreground "LimeGreen"))))
+ '(magit-diff-context-highlight ((((type tty)) (:foreground "default"))))
+ '(magit-diff-file-heading ((((type tty)) nil)))
+ '(magit-diff-removed ((((type tty)) (:foreground "red"))))
+ '(magit-diff-removed-highlight ((((type tty)) (:foreground "IndianRed"))))
+ '(magit-hash ((t (:foreground "green"))))
+ '(magit-section-highlight ((((type tty)) nil)))
+ '(term-color-black ((t (:foreground "#3F3F3F" :background "#2B2B2B"))))
+ '(term-color-blue ((t (:foreground "#7CB8BB" :background "#4C7073"))))
+ '(term-color-cyan ((t (:foreground "#93E0E3" :background "#8CD0D3"))))
+ '(term-color-green ((t (:foreground "#7F9F7F" :background "#9FC59F"))))
+ '(term-color-magenta ((t (:foreground "#DC8CC3" :background "#CC9393"))))
+ '(term-color-red ((t (:foreground "#AC7373" :background "#8C5353"))))
+ '(term-color-white ((t (:foreground "#DCDCCC" :background "#656555"))))
+ '(term-color-yellow ((t (:foreground "#DFAF8F" :background "#9FC59F"))))
+ '(term-default-bg-color ((t (:inherit term-color-black))))
+ '(term-default-fg-color ((t (:inherit term-color-white)))))
+)
