@@ -532,6 +532,54 @@ you should place your code here."
   (setq evil-move-beyond-eol t)
 
 
+  ;; https://github.com/syl20bnr/spacemacs/issues/2222#issuecomment-481155006
+  (cond
+   ;; OS X
+   ((string-equal system-type "darwin") ; Mac OS X
+    (progn
+      (setq save-to-clipboard-cmd "pbcopy")
+      (setq paste-from-clipboard-cmd "pbpaste")
+      )
+    )
+   ;; Linux
+   ((string-equal system-type "gnu/linux") ; linux
+    (progn
+      (setq save-to-clipboard-cmd "xsel -i -b")
+      (setq paste-from-clipboard-cmd "xsel -o -b")
+      )
+    )
+   )
+
+  (defun copy-to-clipboard ()
+    "Copies selection to x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+        (progn
+          (message "Yanked region to x-clipboard!")
+          (call-interactively 'clipboard-kill-ring-save)
+          )
+      (if (region-active-p)
+          (progn
+            (shell-command-on-region (region-beginning) (region-end) save-to-clipboard-cmd)
+            (message "Yanked region to clipboard!")
+            (deactivate-mark))
+        (message "No region active; can't yank to clipboard!")))
+    )
+
+  (defun paste-from-clipboard ()
+    "Pastes from x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+        (progn
+          (clipboard-yank)
+          (message "graphics active")
+          )
+      (insert (shell-command-to-string paste-from-clipboard-cmd))
+      )
+    )
+  (evil-leader/set-key "o y" 'copy-to-clipboard)
+  (evil-leader/set-key "o p" 'paste-from-clipboard)
+
   (require 'windmove)
   (windmove-default-keybindings 'super)
 
@@ -654,11 +702,11 @@ you should place your code here."
   (add-hook 'clojure-mode-hook (lambda ()
                                  (helm-cider-mode)
                                  (spacemacs/toggle-syntax-checking-on)
-                                ; (spacemacs/toggle-aggressive-indent-on)
+                                        ; (spacemacs/toggle-aggressive-indent-on)
                                  ))
 
   ;;(eval-after-load 'cider
-   ;; #'emidje-setup)
+  ;; #'emidje-setup)
 
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tma" 'emidje-run-all-tests)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmb" 'emidje-show-test-report)
@@ -732,8 +780,8 @@ you should place your code here."
 
   ;;when running the following code to disable c-z bindings it causes lots of troubles
   ;; (with-eval-after-load 'evil
-   ;; (define-key evil-emacs-state-map (kbd "C-z") nil)
-   ;; (define-key evil-normal-state-map (kbd "C-z") nil))
+  ;; (define-key evil-emacs-state-map (kbd "C-z") nil)
+  ;; (define-key evil-normal-state-map (kbd "C-z") nil))
 
   (with-eval-after-load 'projectile
     (projectile-register-project-type
