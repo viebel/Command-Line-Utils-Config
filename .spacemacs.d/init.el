@@ -491,6 +491,15 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+
+  ;; mode line time stamp
+  (setq display-time-24hr-format t)
+  (setq display-time-format "%H:%M")        ; add seconds
+  (setq display-time-interval 10)               ; update every second
+  (setq display-time-default-load-average nil) ; don't show load average
+  (setq display-time-mail-string "")           ; don't show mail
+  (display-time-mode 1)                 ; show time in mode line on startup
+
   ;; Set tab width for HTML/CSS/JS modes
   (setq default-indent 2)
   (setq web-mode-markup-indent-offset default-indent) ;; HTML in .html
@@ -697,6 +706,9 @@ you should place your code here."
                                                                  (interactive)
                                                                  (cider-browse-ns (cider-current-ns))))
 
+  ;; additional keys for org mode
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "tky" 'org-table-copy-region)
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "tkp" 'org-table-paste-rectangle)
 
   ;; Enable aggressive indent mode for Clojure
   (add-hook 'clojure-mode-hook (lambda ()
