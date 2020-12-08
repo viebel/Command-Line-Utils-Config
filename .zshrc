@@ -68,3 +68,6 @@ RPROMPT="[%*]"
 # added by travis gem
 [ ! -s /Users/viebel/.travis/travis.sh ] || source /Users/viebel/.travis/travis.sh
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+
+# add google cloud bin to the path
+export PATH=$PATH:/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
