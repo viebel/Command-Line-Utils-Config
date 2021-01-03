@@ -79,5 +79,6 @@
  ;; Provider attributes
 
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
-             "clojars" {:url "https://clojars.org/repo"}}
+             "clojars" {:url "https://clojars.org/repo"}
+             "cyco" {:url "https://maven.cyco.fun/releases"}}
  }
