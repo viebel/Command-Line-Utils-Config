@@ -43,6 +43,8 @@ This function should only modify configuration layer settings."
           org-journal-dir "~/Dropbox/journal/")
      html
      (clojure :variables
+              clojure-backend 'cider
+              clojure-enable-linters 'clj-kondo
               clojure-enable-fancify-symbols nil)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -73,7 +75,6 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      yaml
-     evil-cleverparens
      search-engine
      )
 
@@ -84,8 +85,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(flycheck-clj-kondo
-                                      kibit-helper
+   dotspacemacs-additional-packages '(kibit-helper
                                       org-journal
                                       walkclj
                                       helm-clojuredocs
@@ -99,8 +99,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(magit-svn
-                                    evil-search-highlight-persist
+   dotspacemacs-excluded-packages '(evil-search-highlight-persist
                                     company-tern
                                     ;;magithub
                                     )
@@ -495,6 +494,9 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
 
+  ;; Enable structural editing for all Clojure buffers
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-clojure-mode)
+
   ;; mode line time stamp
   (setq display-time-24hr-format t)
   (setq display-time-format "%H:%M")        ; add seconds
@@ -535,10 +537,6 @@ you should place your code here."
    '(magit-diff-removed ((((type tty)) (:foreground "red"))))
    '(magit-diff-removed-highlight ((((type tty)) (:foreground "IndianRed"))))
    '(magit-section-highlight ((((type tty)) nil))))
-
-  ;; Enable safe structural editing (evil-cleverparens)
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
-  (add-hook 'lisp-mode-hook #'evil-cleverparens-mode)
 
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
@@ -729,11 +727,6 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmr" 'emidje-re-run-non-passing-tests)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmt" 'emidje-run-test-at-point)
   (spacemacs/set-leader-keys-for-major-mode 'clojure-mode "tmi" 'emidje-format-tabular)
-
-  (use-package clojure-mode
-    :ensure t
-    :config
-    (require 'flycheck-clj-kondo))
 
   ;; See https://github.com/luxbock/evil-cleverparens/issues/58#issuecomment-717419683
   (use-package evil-cleverparens
