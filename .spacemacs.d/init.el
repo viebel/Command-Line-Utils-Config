@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
      asciidoc
      (plantuml :variables plantuml-jar-path "~/bin/plantUml.jar")
      javascript
+     (spell-checking :variables spell-checking-enable-auto-dictionary t)
      (org :variables
           org-enable-org-journal-support t
           org-journal-dir "~/Dropbox/journal/")
